@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ImageCrop/ImageCrop.iml" filepath="$PROJECT_DIR$/ImageCrop/ImageCrop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Lib.iml" filepath="$PROJECT_DIR$/Lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PullToRefresh/PullToRefresh.iml" filepath="$PROJECT_DIR$/PullToRefresh/PullToRefresh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/QiNiu/QiNiu.iml" filepath="$PROJECT_DIR$/QiNiu/QiNiu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/androidtimessquareidle_wulib/androidtimessquareidle_wulib.iml" filepath="$PROJECT_DIR$/androidtimessquareidle_wulib/androidtimessquareidle_wulib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tecentweibo/tecentweibo.iml" filepath="$PROJECT_DIR$/tecentweibo/tecentweibo.iml" />
+    </modules>
+  </component>
+</project>
+

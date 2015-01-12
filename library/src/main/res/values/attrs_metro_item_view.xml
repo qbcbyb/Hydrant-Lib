@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MetroItemView">
+        <attr name="android:src" />
+        <attr name="android:text" />
+        <attr name="android:textColor" />
+        <attr name="android:textSize" />
+        <attr name="titleHeight" format="dimension" />
+        <attr name="workId" format="integer" />
+        <attr name="textBackground" format="reference|color" />
+        <attr name="viewLayoutMode" format="enum">
+            <enum name="Normal" value="0" />
+            <enum name="Overlay" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

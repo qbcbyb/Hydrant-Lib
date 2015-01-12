@@ -1,0 +1,7 @@
+<resources>
+
+    <declare-styleable name="AnimationImageView">
+        <attr name="animationDrawable" format="reference" />
+    </declare-styleable>
+
+</resources>

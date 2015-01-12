@@ -1,0 +1,7 @@
+<resources>
+
+    <declare-styleable name="ImageViewCustom">
+        <attr name="widthDividedHeight" format="float" />
+    </declare-styleable>
+
+</resources>

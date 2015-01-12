@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="black_alpha_60">#9000</color>
+    <color name="transparent">#0000</color>
+    <color name="black_alpha_20">#3000</color>
+
+    <color name="background_tab_pressed">#6633B5E5</color>
+
+</resources>
