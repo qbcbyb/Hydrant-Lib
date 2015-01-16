@@ -23,7 +23,7 @@ allprojects {
         maven { url "http://localhost:8081/nexus/content/groups/public/" }
         jcenter()
     }
-    group = 'cn.qbcbyb'
+    group = 'com.github.qbcbyb'
     version = '1.0.0-SNAPSHOT'
 
     ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
@@ -44,7 +44,7 @@ allprojects {
 //                    authentication(userName: "deployment", password: "deployment123")
 //                }
 
-//                pom.groupId = 'cn.qbcbyb'
+//                pom.groupId = 'com.github.qbcbyb'
 //                pom.version = '1.0.0'
                 pom {
                     artifactId = project.name
@@ -89,7 +89,7 @@ allprojects {
 }
 
 gradle.taskGraph.whenReady { taskGraph ->
-    if (taskGraph.allTasks.any { it instanceof Sign }) {
+    if (taskGraph.allTasks.any { it instanceof Sign } && ext.isReleaseVersion) {
         // Use Java 6's console to read from the console (no good for
         // a CI environment)
         Console console = System.console()
