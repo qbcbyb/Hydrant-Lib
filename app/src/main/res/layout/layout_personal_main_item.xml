@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.qbcbyb.library.view.MetroItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/itemMetro"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#282828"
+    android:textColor="@color/white"
+    android:textSize="14sp"
+    app:titleHeight="20dp" />
