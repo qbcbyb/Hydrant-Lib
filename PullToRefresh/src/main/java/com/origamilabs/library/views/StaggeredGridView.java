@@ -39,6 +39,7 @@ import android.support.v4.widget.EdgeEffectCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
@@ -69,16 +70,6 @@ import java.util.Arrays;
  */
 public class StaggeredGridView extends ViewGroup {
     private static final String TAG = "StaggeredGridView";
-
-    private static void w(String tag, String message) {
-        Log.w(tag,message);
-    }
-    private static void d(String tag, String message) {
-        Log.d(tag,message);
-    }
-    private static void e(String tag, String message) {
-        Log.e(tag,message);
-    }
 
     /*
      * There are a few things you should know if you're going to make modifications
@@ -432,7 +423,7 @@ public class StaggeredGridView extends ViewGroup {
             case MotionEvent.ACTION_MOVE: {
                 final int index = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
                 if (index < 0) {
-                    e(TAG, "onInterceptTouchEvent could not find pointer with id " +
+                    Log.e(TAG, "onInterceptTouchEvent could not find pointer with id " +
                             mActivePointerId + " - did StaggeredGridView receive an inconsistent " +
                             "event stream?");
                     return false;
@@ -498,7 +489,7 @@ public class StaggeredGridView extends ViewGroup {
 
                 final int index = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
                 if (index < 0) {
-                    e(TAG, "onInterceptTouchEvent could not find pointer with id " +
+                    Log.e(TAG, "onInterceptTouchEvent could not find pointer with id " +
                             mActivePointerId + " - did StaggeredGridView receive an inconsistent " +
                             "event stream?");
                     return false;
@@ -799,7 +790,6 @@ public class StaggeredGridView extends ViewGroup {
                     final int colBottom = bottom + rec.getMarginBelow(col - lp.column);
                     if (colTop < mItemTops[col]) {
                         mItemTops[col] = colTop;
-                        d("mItemTops[" + col + "] = colTop", col + ":" + colTop);
                     }
                     if (colBottom > mItemBottoms[col]) {
                         mItemBottoms[col] = colBottom;
@@ -810,12 +800,8 @@ public class StaggeredGridView extends ViewGroup {
             for (int col = 0; col < mColCount; col++) {
                 if (mItemTops[col] == Integer.MAX_VALUE) {
                     // If one was untouched, both were.
-//                    mItemTops[col] = 0;
-//                    mItemBottoms[col] = 0;
-//                    d("mItemTops[" + col + "] = 0", col + ":" + oldItemTops[col] + ":" + oldItemBottoms[col]);
                     mItemTops[col] = oldItemBottoms[col];
                     mItemBottoms[col] = oldItemBottoms[col];
-                    d("mItemTops[" + col + "] = 0", col + ":" + oldItemTops[col]);
                 }
             }
         }
@@ -992,7 +978,6 @@ public class StaggeredGridView extends ViewGroup {
         for (int i = 0; i < colCount; i++) {
             final int offset = top + ((mRestoreOffsets != null) ? Math.min(mRestoreOffsets[i], 0) : 0);
             mItemTops[i] = (offset == 0) ? mItemTops[i] : offset;
-            d("mItemTops[" + i + "] = (offset == 0) ? mItemTops[i] : offset;", i + ":" + mItemTops[i]);
             mItemBottoms[i] = (offset == 0) ? mItemBottoms[i] : offset;
         }
 
@@ -1022,7 +1007,6 @@ public class StaggeredGridView extends ViewGroup {
         final int colCount = mColCount;
         for (int i = 0; i < colCount; i++) {
             mItemTops[i] += offset;
-            d("mItemTops[" + i + "] += offset;", i + ":" + mItemTops[i]);
             mItemBottoms[i] += offset;
         }
     }
@@ -1315,7 +1299,6 @@ public class StaggeredGridView extends ViewGroup {
 
             for (int i = nextCol; i < nextCol + span; i++) {
                 mItemTops[i] = childTop - rec.getMarginAbove(i - nextCol) - itemMargin;
-                d("mItemTops[" + i + "] = childTop - rec.getMarginAbove(i - nextCol) - itemMargin;", i + ":" + mItemTops[i]);
             }
 
             nextCol = getNextColumnUp();
@@ -1341,6 +1324,7 @@ public class StaggeredGridView extends ViewGroup {
             }
         }
 
+        Log.w("StaggeredGridView", "Height:" + getHeight() + ",highestView:" + highestView);
         return gridTop - highestView;
     }
 
@@ -1516,7 +1500,7 @@ public class StaggeredGridView extends ViewGroup {
      * for debug purposes
      */
     private void displayMapping() {
-        w("DISPLAY", "MAP ****************");
+        Log.w("DISPLAY", "MAP ****************");
         StringBuilder sb = new StringBuilder();
         int col = 0;
 
@@ -1527,11 +1511,11 @@ public class StaggeredGridView extends ViewGroup {
                 sb.append(i);
                 sb.append(" , ");
             }
-            w("DISPLAY", sb.toString());
+            Log.w("DISPLAY", sb.toString());
             sb = new StringBuilder();
             col++;
         }
-        w("DISPLAY", "MAP END ****************");
+        Log.w("DISPLAY", "MAP END ****************");
     }
 
     /**
@@ -1827,7 +1811,7 @@ public class StaggeredGridView extends ViewGroup {
                         final View child = getChildAt(i);
                         final int left = child.getLeft();
                         int col = 0;
-                        w("mColWidth", mColWidth + " " + left);
+                        Log.w("mColWidth", mColWidth + " " + left);
 
                         // determine the column by cycling widths
                         while (left > col * (this.mColWidth + mItemMargin * 2) + getPaddingLeft()) {
@@ -1913,7 +1897,7 @@ public class StaggeredGridView extends ViewGroup {
             super(MATCH_PARENT, height);
 
             if (this.height == MATCH_PARENT) {
-                w(TAG, "Constructing LayoutParams with height FILL_PARENT - " +
+                Log.w(TAG, "Constructing LayoutParams with height FILL_PARENT - " +
                         "impossible! Falling back to WRAP_CONTENT");
                 this.height = WRAP_CONTENT;
             }
@@ -1923,12 +1907,12 @@ public class StaggeredGridView extends ViewGroup {
             super(c, attrs);
 
             if (this.width != MATCH_PARENT) {
-                w(TAG, "Inflation setting LayoutParams width to " + this.width +
+                Log.w(TAG, "Inflation setting LayoutParams width to " + this.width +
                         " - must be MATCH_PARENT");
                 this.width = MATCH_PARENT;
             }
             if (this.height == MATCH_PARENT) {
-                w(TAG, "Inflation setting LayoutParams height to MATCH_PARENT - " +
+                Log.w(TAG, "Inflation setting LayoutParams height to MATCH_PARENT - " +
                         "impossible! Falling back to WRAP_CONTENT");
                 this.height = WRAP_CONTENT;
             }
@@ -1942,12 +1926,12 @@ public class StaggeredGridView extends ViewGroup {
             super(other);
 
             if (this.width != MATCH_PARENT) {
-                w(TAG, "Constructing LayoutParams with width " + this.width +
+                Log.w(TAG, "Constructing LayoutParams with width " + this.width +
                         " - must be MATCH_PARENT");
                 this.width = MATCH_PARENT;
             }
             if (this.height == MATCH_PARENT) {
-                w(TAG, "Constructing LayoutParams with height MATCH_PARENT - " +
+                Log.w(TAG, "Constructing LayoutParams with height MATCH_PARENT - " +
                         "impossible! Falling back to WRAP_CONTENT");
                 this.height = WRAP_CONTENT;
             }
@@ -2163,7 +2147,7 @@ public class StaggeredGridView extends ViewGroup {
                     + " position=" + position + "}";
         }
 
-        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);
             }
@@ -2431,7 +2415,7 @@ public class StaggeredGridView extends ViewGroup {
      * {@link android.view.View.OnCreateContextMenuListener#onCreateContextMenu(android.view.ContextMenu, android.view.View, android.view.ContextMenu.ContextMenuInfo) }
      * callback when a context menu is brought up for this AdapterView.
      */
-    public static class AdapterContextMenuInfo implements ContextMenuInfo {
+    public static class AdapterContextMenuInfo implements ContextMenu.ContextMenuInfo {
 
         public AdapterContextMenuInfo(View targetView, int position, long id) {
             this.targetView = targetView;

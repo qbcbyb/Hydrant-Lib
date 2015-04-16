@@ -268,15 +268,19 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
                     if (absDiff > mTouchSlop && (!mFilterTouchEvents || absDiff > Math.abs(oppositeDiff))) {
                         if (mMode.showHeaderLoadingLayout() && diff >= 1f && isReadyForPullStart()) {
-                            mLastMotionY = y;
-                            mLastMotionX = x;
+                            mLastMotionY = mInitialMotionY = event.getY();
+                            mLastMotionX = mInitialMotionX = event.getX();
+//                            mLastMotionY = y;
+//                            mLastMotionX = x;
                             mIsBeingDragged = true;
                             if (mMode == Mode.BOTH) {
                                 mCurrentMode = Mode.PULL_FROM_START;
                             }
                         } else if (mMode.showFooterLoadingLayout() && diff <= -1f && isReadyForPullEnd()) {
-                            mLastMotionY = y;
-                            mLastMotionX = x;
+                            mLastMotionY = mInitialMotionY = event.getY();
+                            mLastMotionX = mInitialMotionX = event.getX();
+//                            mLastMotionY = y;
+//                            mLastMotionX = x;
                             mIsBeingDragged = true;
                             if (mMode == Mode.BOTH) {
                                 mCurrentMode = Mode.PULL_FROM_END;

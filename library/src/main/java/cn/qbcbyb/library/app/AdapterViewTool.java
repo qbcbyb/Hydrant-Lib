@@ -1,5 +1,6 @@
 package cn.qbcbyb.library.app;
 
+import android.app.ListActivity;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.TextView;
@@ -63,19 +64,16 @@ public abstract class AdapterViewTool<V extends PullToRefreshBase, A extends Ada
     public void init() {
         listView = (V) listContainer.findById(android.R.id.list);
         txtEmptyView = (TextView) listContainer.findById(android.R.id.empty);
+        emptyViewSetSuccess = false;
         if (listView != null) {
             if (txtEmptyView != null) {
-                emptyViewSetSuccess = false;
                 try {
                     Method setEmptyView = listView.getClass().getMethod("setEmptyView", View.class);
                     setEmptyView.invoke(listView, txtEmptyView);
                     emptyViewSetSuccess = true;
                 } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
                 } catch (InvocationTargetException e) {
-                    e.printStackTrace();
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
                 }
             }
             listView.setOnRefreshListener(this);

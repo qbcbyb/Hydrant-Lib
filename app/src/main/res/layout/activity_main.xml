@@ -10,12 +10,12 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent" />-->
 
-    <com.origamilabs.library.views.StaggeredGridView
+    <com.handmark.pulltorefresh.library.PullToRefreshStaggeredGridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="-1px"
         android:layout_marginTop="-1px"
         app:itemMargin="1px"
-        app:numColumns="2"></com.origamilabs.library.views.StaggeredGridView>
+        app:numColumns="2" />
 </RelativeLayout>

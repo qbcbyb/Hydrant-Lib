@@ -41,7 +41,10 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (!isViewCachedEnable() || getCachedView() == null) {
-            setCachedView(onCreateMainView(inflater, container, savedInstanceState));
+            View view = onCreateMainView(inflater, container, savedInstanceState);
+            setCachedView(view);
+            onMainViewCreated(view);
+            onMainViewInited();
         } else if (getCachedView().getParent() != null) {
             ((ViewGroup) getCachedView().getParent()).removeView(getCachedView());
         }
@@ -50,6 +53,12 @@ public abstract class BaseFragment extends Fragment {
 
     View onCreateMainView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return onCreateContentView(inflater, container, savedInstanceState);
+    }
+
+    public void onMainViewCreated(View view) {
+    }
+
+    public void onMainViewInited() {
     }
 
     public abstract View onCreateContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState);

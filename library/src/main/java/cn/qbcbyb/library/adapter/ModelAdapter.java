@@ -1,6 +1,5 @@
 package cn.qbcbyb.library.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -28,15 +27,6 @@ public class ModelAdapter<T extends BaseModel> extends BaseAdapter {
     private int mResource;
     private int mDropDownResource;
     private LayoutInflater mInflater;
-    private Activity activity;
-
-    public Activity getActivity() {
-        return activity;
-    }
-
-    public void setActivity(Activity activity) {
-        this.activity = activity;
-    }
 
     /**
      * Constructor
@@ -320,10 +310,6 @@ public class ModelAdapter<T extends BaseModel> extends BaseAdapter {
          * @return true if the data was bound to the view, false otherwise
          */
         boolean setViewValue(View view, Object dataSet, Object data, String textRepresentation);
-    }
-
-    public static interface OnSelectedChange {
-        void onChange(BaseAdapter adapter, int oldIndex, int newIndex);
     }
 
 }

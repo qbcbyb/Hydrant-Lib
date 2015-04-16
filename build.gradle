@@ -37,12 +37,12 @@ allprojects {
         repositories {
             mavenDeployer {
                 beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-//                repository(url: "http://localhost:8081/nexus/content/repositories/releases") {
-//                    authentication(userName: "deployment", password: "deployment123")
-//                }
-//                snapshotRepository(url: "http://localhost:8081/nexus/content/repositories/snapshots/") {
-//                    authentication(userName: "deployment", password: "deployment123")
-//                }
+                repository(url: "http://localhost:8081/nexus/content/repositories/releases") {
+                    authentication(userName: "deployment", password: "deployment123")
+                }
+                snapshotRepository(url: "http://localhost:8081/nexus/content/repositories/snapshots/") {
+                    authentication(userName: "deployment", password: "deployment123")
+                }
 
 //                pom.groupId = 'com.github.qbcbyb'
 //                pom.version = '1.0.0'

@@ -26,14 +26,14 @@ public abstract class ListModelFragment<T extends BaseModel> extends  BaseFragme
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onMainViewCreated(View view) {
+        super.onMainViewCreated(view);
         adapterListModelTool=new AdapterListModelTool<T>(this);
         adapterListModelTool.init();
     }
 
     @Override
     public View findById(int id) {
-        return getView().findViewById(id);
+        return getCachedView().findViewById(id);
     }
 }

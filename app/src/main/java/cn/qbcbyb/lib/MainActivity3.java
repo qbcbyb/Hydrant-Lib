@@ -34,10 +34,10 @@ public class MainActivity3 extends BaseActivity implements AdapterView.OnItemCli
         v.setLayoutParams(new ViewGroup.LayoutParams(-1, 400));
         v.setBackgroundColor(Color.RED);
         gridView.addHeaderView(v, null, false);
-        v = new View(context);
-        v.setLayoutParams(new ViewGroup.LayoutParams(-1, 400));
-        v.setBackgroundColor(Color.RED);
-        gridView.addFooterView(v, null, false);
+//        v = new View(context);
+//        v.setLayoutParams(new ViewGroup.LayoutParams(-1, 400));
+//        v.setBackgroundColor(Color.RED);
+//        gridView.addFooterView(v, null, false);
 
         BaseDynamicGridAdapter adapter = new CheeseDynamicAdapter(this,
                 new ArrayList<String>(Arrays.asList(Cheeses.sCheeseStrings)),

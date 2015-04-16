@@ -21,6 +21,7 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.origamilabs.library.views.StaggeredGridView;
@@ -152,7 +153,6 @@ public class PullToRefreshStaggeredGridView extends PullToRefreshBase<StaggeredG
         public InternalStaggeredGridViewSDK9(Context context, AttributeSet attrs) {
             super(context, attrs);
         }
-
 
         @Override
         protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX,

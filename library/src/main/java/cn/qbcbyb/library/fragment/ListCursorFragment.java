@@ -23,14 +23,14 @@ public abstract class ListCursorFragment extends BaseFragment implements Adapter
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onMainViewCreated(View view) {
+        super.onMainViewCreated(view);
         listCursorTool=new AdapterListCursorTool(this);
         listCursorTool.init();
     }
 
     @Override
     public View findById(int id) {
-        return getView().findViewById(id);
+        return getCachedView().findViewById(id);
     }
 }
