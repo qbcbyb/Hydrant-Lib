@@ -13,9 +13,11 @@ import java.util.List;
 
 import cn.qbcbyb.library.R;
 import cn.qbcbyb.library.app.BaseApplication;
+import cn.qbcbyb.library.fragment.BaseFragment;
+import cn.qbcbyb.library.fragment.IController;
 import cn.qbcbyb.library.util.Msg;
 
-public abstract class BaseActivity extends ActionBarActivity {
+public abstract class BaseActivity extends ActionBarActivity implements IController {
     protected final String TAG = this.getClass().getSimpleName();
 
     public static final DisplayImageOptions DISPLAY_IMAGE_OPTIONS_OF_SOURCE = BaseApplication.getDefaultDiaplayImageOptionsBuilder()
@@ -95,6 +97,11 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     protected void doDestroy() {
         // do nothing
+    }
+
+    @Override
+    public void onFragmentViewCreated(BaseFragment fragment) {
+
     }
 
     public static void finishAllActivity() {

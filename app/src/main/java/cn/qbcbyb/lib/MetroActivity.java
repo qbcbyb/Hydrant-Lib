@@ -1,10 +1,12 @@
 package cn.qbcbyb.lib;
 
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.origamilabs.library.views.StaggeredGridView;
+import com.zbar.lib.CaptureActivity;
 
 import java.util.List;
 
@@ -17,7 +19,7 @@ import cn.qbcbyb.library.view.MetroItemView;
 /**
  * Created by 秋云 on 2015/2/3.
  */
-public class MetroActivity extends CustomViewActionBarActivity {
+public class MetroActivity extends CustomViewActionBarActivity implements StaggeredGridView.OnItemClickListener {
 
     private StaggeredGridView staggeredGridView;
     private ModelAdapter<JumpData> jumpDataModelAdapter;
@@ -92,6 +94,12 @@ public class MetroActivity extends CustomViewActionBarActivity {
             }
         });
         staggeredGridView.setAdapter(jumpDataModelAdapter);
+        staggeredGridView.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick(StaggeredGridView parent, View view, int position, long id) {
+        startActivity(new Intent(this, CaptureActivity.class));
     }
 
     public enum QueryType {

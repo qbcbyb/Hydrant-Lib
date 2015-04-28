@@ -37,6 +37,8 @@ dependencies {
     compile project(':QiNiu')
     compile project(':ImageCrop')
     compile project(':androidtimessquareidle_wulib')
+    compile project(':qrcodescan')
+    compile project(':viewpagerindicator')
 }
 
 task androidJavadocs(type: Javadoc) {

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">QR</string>
+    <string name="corner_txt_sweep">扫一扫</string>
+    <string name="qrcode_cancel">取消</string>
+</resources>

@@ -1,5 +1,6 @@
 package cn.qbcbyb.library.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -59,8 +60,22 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void onMainViewInited() {
+        controller.onFragmentViewCreated(this);
     }
 
     public abstract View onCreateContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState);
 
+
+    protected IController controller;
+
+    public abstract void setController(IController controller);
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof IController) {
+            controller = (IController) activity;
+            setController(controller);
+        }
+    }
 }
