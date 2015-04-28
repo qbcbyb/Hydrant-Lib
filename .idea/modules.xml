@@ -11,7 +11,6 @@
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/qrcodescan/qrcodescan.iml" filepath="$PROJECT_DIR$/qrcodescan/qrcodescan.iml" />
       <module fileurl="file://$PROJECT_DIR$/tecentweibo/tecentweibo.iml" filepath="$PROJECT_DIR$/tecentweibo/tecentweibo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/viewpagerindicator/viewpagerindicator.iml" filepath="$PROJECT_DIR$/viewpagerindicator/viewpagerindicator.iml" />
     </modules>
   </component>
 </project>

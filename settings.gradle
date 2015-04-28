@@ -1,1 +1,1 @@
-include ':app', ':library', ':PullToRefresh', ':tecentweibo', ':QiNiu', ':ImageCrop', ':androidtimessquareidle_wulib', ':qrcodescan', ':viewpagerindicator'
+include ':app', ':library', ':PullToRefresh', ':tecentweibo', ':QiNiu', ':ImageCrop', ':androidtimessquareidle_wulib', ':qrcodescan'
