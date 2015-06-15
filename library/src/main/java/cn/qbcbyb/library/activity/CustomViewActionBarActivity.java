@@ -1,5 +1,7 @@
 package cn.qbcbyb.library.activity;
 
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBar;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -89,6 +91,25 @@ public abstract class CustomViewActionBarActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected Drawable getStatusBarTintDrawable() {
+        return getActionBarBackground();
+    }
+
+    protected Drawable getActionBarBackground() {
+        int[] android_styleable_ActionBar = {android.R.attr.background};
+        // Need to get resource id of style pointed to from actionBarStyle
+        TypedValue outValue = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.actionBarStyle, outValue, true);
+        // Now get action bar style values...
+        TypedArray abStyle = getTheme().obtainStyledAttributes(outValue.resourceId, android_styleable_ActionBar);
+        try {
+            return abStyle.getDrawable(0);
+        } finally {
+            abStyle.recycle();
+        }
+    }
+
     protected void initActionBar() {
         if (actionBar == null) {
             actionBar = getSupportActionBar();
@@ -97,6 +118,7 @@ public abstract class CustomViewActionBarActivity extends BaseActivity {
             try {
                 actionBar.setDisplayShowTitleEnabled(false);
                 actionBar.setDisplayShowHomeEnabled(false);
+                actionBar.setDisplayUseLogoEnabled(false);
                 actionBar.setDisplayShowCustomEnabled(true);
                 RelativeLayout customViewLayout = new RelativeLayout(this);
                 ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,

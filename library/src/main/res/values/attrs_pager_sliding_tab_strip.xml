@@ -17,4 +17,7 @@
         <attr name="android:textSize" />
         <attr name="selectedTextSize" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="PagerTabStrip">
+        <attr name="indicatorDrawable" format="reference" />
+    </declare-styleable>
 </resources>

@@ -45,15 +45,7 @@ import java.util.Locale;
 import cn.qbcbyb.library.R;
 
 
-public class PagerSlidingTabStrip extends HorizontalScrollView {
-
-    public interface IconTabProvider {
-        public int getPageIconResId(int position);
-    }
-
-    public interface LayoutProvider {
-        public View getLayout(int position, String s);
-    }
+public class VerticalPagerSlidingTabStrip extends HorizontalScrollView {
 
     private LinearLayout.LayoutParams defaultTabLayoutParams;
     private LinearLayout.LayoutParams expandedTabLayoutParams;
@@ -62,7 +54,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     public OnPageChangeListener delegatePageListener;
 
     private LinearLayout tabsContainer;
-    private ViewPager pager;
+    private VerticalViewPager pager;
 
     private int tabCount;
 
@@ -119,15 +111,15 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         }
     }
 
-    public PagerSlidingTabStrip(Context context) {
+    public VerticalPagerSlidingTabStrip(Context context) {
         this(context, null);
     }
 
-    public PagerSlidingTabStrip(Context context, AttributeSet attrs) {
+    public VerticalPagerSlidingTabStrip(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public PagerSlidingTabStrip(Context context, AttributeSet attrs, int defStyle) {
+    public VerticalPagerSlidingTabStrip(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         setFillViewport(true);
@@ -190,7 +182,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         }
     }
 
-    public void setViewPager(ViewPager pager) {
+    public void setViewPager(VerticalViewPager pager) {
         this.pager = pager;
 
         if (pager.getAdapter() == null) {
@@ -214,11 +206,11 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
         for (int i = 0; i < tabCount; i++) {
 
-            if (pager.getAdapter() instanceof IconTabProvider) {
-                addIconTab(i, ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
+            if (pager.getAdapter() instanceof PagerSlidingTabStrip.IconTabProvider) {
+                addIconTab(i, ((PagerSlidingTabStrip.IconTabProvider) pager.getAdapter()).getPageIconResId(i));
             } else if (pager.getAdapter() instanceof PagerSlidingTabStrip.LayoutProvider) {
                 CharSequence pageTitle = pager.getAdapter().getPageTitle(i);
-                addTab(i, ((PagerSlidingTabStrip.LayoutProvider) pager.getAdapter()).getLayout(i, pageTitle == null ? "" : pageTitle.toString()));
+                addTab(i,((PagerSlidingTabStrip.LayoutProvider) pager.getAdapter()).getLayout(i,pageTitle == null ? "" : pageTitle.toString()));
             } else {
                 CharSequence pageTitle = pager.getAdapter().getPageTitle(i);
                 addTextTab(i, pageTitle == null ? "" : pageTitle.toString());

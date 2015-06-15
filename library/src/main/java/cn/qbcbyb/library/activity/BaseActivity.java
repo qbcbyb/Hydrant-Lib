@@ -1,13 +1,19 @@
 package cn.qbcbyb.library.activity;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
+import android.view.Window;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,9 +77,38 @@ public abstract class BaseActivity extends ActionBarActivity implements IControl
         if (!activedActivity.contains(this)) {
             activedActivity.add(this);
         }
+        if (getStatusBarTintDrawable() != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            SystemBarTintManager tintManager;
+            tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintDrawable(getStatusBarTintDrawable());
+            tintManager.setStatusBarTintEnabled(true);
+            setStatusBarDarkMode(getStatusBarDarkMode());
+        }
         doCreate();
         afterCreate();
         doInit();
+    }
+
+    protected Drawable getStatusBarTintDrawable() {
+        return null;
+    }
+
+    protected boolean getStatusBarDarkMode() {
+        return false;
+    }
+
+    public void setStatusBarDarkMode(boolean darkmode) {
+        Class<? extends Window> clazz = getWindow().getClass();
+        try {
+            int darkModeFlag = 0;
+            Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+            Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+            darkModeFlag = field.getInt(layoutParams);
+            Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+            extraFlagField.invoke(getWindow(), darkmode ? darkModeFlag : 0, darkModeFlag);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

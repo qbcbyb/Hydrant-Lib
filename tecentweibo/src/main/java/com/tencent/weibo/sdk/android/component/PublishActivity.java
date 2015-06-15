@@ -769,9 +769,6 @@ public class PublishActivity extends Activity implements OnClickListener,
                 imageView_big.setImageDrawable(new BitmapDrawable(bitmap));
                 frameLayout_icon.setVisibility(View.VISIBLE);
                 frameLayout_big.setVisibility(View.VISIBLE);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

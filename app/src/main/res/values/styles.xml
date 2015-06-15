@@ -1,8 +1,20 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:actionBarStyle">@style/Widget.AppCompat.ActionBar.WithCustomBgColor
+        </item>
+        <item name="actionBarStyle">@style/Widget.AppCompat.ActionBar.WithCustomBgColor</item>
     </style>
 
+    <style name="Widget.AppCompat.ActionBar.WithCustomBgColor">
+        <item name="android:background">@color/red</item>
+        <item name="background">@color/red</item>
+    </style>
+
+    <color name="red">#f00</color>
 </resources>
