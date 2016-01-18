@@ -24,7 +24,7 @@ allprojects {
         jcenter()
     }
     group = 'com.github.qbcbyb'
-    version = '1.0.1-SNAPSHOT'
+    version = '1.0.3-SNAPSHOT'
 
     ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
