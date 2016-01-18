@@ -48,6 +48,8 @@ public class PagerTabStrip extends LinearLayout {
 
     private int indicatorDrawable;
 
+    private LayoutParams childLayoutParams;
+
     public void setCurrentItem(int currentItem) {
         if (this.currentItem > -1 && this.currentItem < getChildCount()) {
             View view = getChildAt(this.currentItem);
@@ -91,6 +93,14 @@ public class PagerTabStrip extends LinearLayout {
         pager.setOnPageChangeListener(pageListener);
 
         notifyDataSetChanged();
+    }
+
+    public LayoutParams getChildLayoutParams() {
+        return childLayoutParams;
+    }
+
+    public void setChildLayoutParams(LayoutParams childLayoutParams) {
+        this.childLayoutParams = childLayoutParams;
     }
 
     public void setOnPageChangeListener(OnPageChangeListener listener) {
@@ -146,7 +156,7 @@ public class PagerTabStrip extends LinearLayout {
             }
         });
 
-        addView(tab, position, LAYOUTPARAMS);
+        addView(tab, position, childLayoutParams == null ? LAYOUTPARAMS : childLayoutParams);
     }
 
     private void updateTabStyles() {

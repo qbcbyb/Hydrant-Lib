@@ -1,7 +1,5 @@
 package cn.qbcbyb.library.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -12,10 +10,12 @@ import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import cn.qbcbyb.library.model.BaseModel;
 import cn.qbcbyb.library.model.BaseParentModel;
 
-public class ModelGroupAdapter<T extends BaseParentModel<T1>,T1 extends BaseModel>
+public class ModelGroupAdapter<T extends BaseParentModel<T1>, T1 extends BaseModel>
         extends BaseExpandableListAdapter {
     private Index selectedIndex;
     private OnSelectedChange onSelectedChange;
@@ -55,134 +55,107 @@ public class ModelGroupAdapter<T extends BaseParentModel<T1>,T1 extends BaseMode
 
     /**
      * Constructor
-     * 
-     * @param context
-     *            The context where the {@link android.widget.ExpandableListView} associated
-     *            with this {@link ModelGroupAdapter} is running
-     * @param groupData
-     *            A List of Maps. Each entry in the List corresponds to one
-     *            group in the list. The Maps contain the data for each group,
-     *            and should include all the entries specified in "groupFrom"
-     * @param groupFrom
-     *            A list of keys that will be fetched from the Map associated
-     *            with each group.
-     * @param groupTo
-     *            The group views that should display column in the "groupFrom"
-     *            parameter. These should all be TextViews. The first N views in
-     *            this list are given the values of the first N columns in the
-     *            groupFrom parameter.
-     * @param groupLayout
-     *            resource identifier of a view layout that defines the views
-     *            for a group. The layout file should include at least those
-     *            named views defined in "groupTo"
-     * @param childFrom
-     *            A list of keys that will be fetched from the Map associated
-     *            with each child.
-     * @param childTo
-     *            The child views that should display column in the "childFrom"
-     *            parameter. These should all be TextViews. The first N views in
-     *            this list are given the values of the first N columns in the
-     *            childFrom parameter.
-     * @param childLayout
-     *            resource identifier of a view layout that defines the views
-     *            for a child. The layout file should include at least those
-     *            named views defined in "childTo"
+     *
+     * @param context     The context where the {@link android.widget.ExpandableListView} associated
+     *                    with this {@link ModelGroupAdapter} is running
+     * @param groupData   A List of Maps. Each entry in the List corresponds to one
+     *                    group in the list. The Maps contain the data for each group,
+     *                    and should include all the entries specified in "groupFrom"
+     * @param groupFrom   A list of keys that will be fetched from the Map associated
+     *                    with each group.
+     * @param groupTo     The group views that should display column in the "groupFrom"
+     *                    parameter. These should all be TextViews. The first N views in
+     *                    this list are given the values of the first N columns in the
+     *                    groupFrom parameter.
+     * @param groupLayout resource identifier of a view layout that defines the views
+     *                    for a group. The layout file should include at least those
+     *                    named views defined in "groupTo"
+     * @param childFrom   A list of keys that will be fetched from the Map associated
+     *                    with each child.
+     * @param childTo     The child views that should display column in the "childFrom"
+     *                    parameter. These should all be TextViews. The first N views in
+     *                    this list are given the values of the first N columns in the
+     *                    childFrom parameter.
+     * @param childLayout resource identifier of a view layout that defines the views
+     *                    for a child. The layout file should include at least those
+     *                    named views defined in "childTo"
      */
     public ModelGroupAdapter(Context context, List<T> groupData, int groupLayout, String[] groupFrom,
                              int[] groupTo, int childLayout, String[] childFrom, int[] childTo) {
         this(context, groupData, groupLayout, groupLayout, groupFrom, groupTo, childLayout, childLayout, childFrom,
-            childTo);
+                childTo);
     }
 
     /**
      * Constructor
-     * 
-     * @param context
-     *            The context where the {@link android.widget.ExpandableListView} associated
-     *            with this {@link ModelGroupAdapter} is running
-     * @param groupData
-     *            A List of Maps. Each entry in the List corresponds to one
-     *            group in the list. The Maps contain the data for each group,
-     *            and should include all the entries specified in "groupFrom"
-     * @param groupFrom
-     *            A list of keys that will be fetched from the Map associated
-     *            with each group.
-     * @param groupTo
-     *            The group views that should display column in the "groupFrom"
-     *            parameter. These should all be TextViews. The first N views in
-     *            this list are given the values of the first N columns in the
-     *            groupFrom parameter.
-     * @param expandedGroupLayout
-     *            resource identifier of a view layout that defines the views
-     *            for an expanded group. The layout file should include at least
-     *            those named views defined in "groupTo"
-     * @param collapsedGroupLayout
-     *            resource identifier of a view layout that defines the views
-     *            for a collapsed group. The layout file should include at least
-     *            those named views defined in "groupTo"
-     * @param childFrom
-     *            A list of keys that will be fetched from the Map associated
-     *            with each child.
-     * @param childTo
-     *            The child views that should display column in the "childFrom"
-     *            parameter. These should all be TextViews. The first N views in
-     *            this list are given the values of the first N columns in the
-     *            childFrom parameter.
-     * @param childLayout
-     *            resource identifier of a view layout that defines the views
-     *            for a child. The layout file should include at least those
-     *            named views defined in "childTo"
+     *
+     * @param context              The context where the {@link android.widget.ExpandableListView} associated
+     *                             with this {@link ModelGroupAdapter} is running
+     * @param groupData            A List of Maps. Each entry in the List corresponds to one
+     *                             group in the list. The Maps contain the data for each group,
+     *                             and should include all the entries specified in "groupFrom"
+     * @param groupFrom            A list of keys that will be fetched from the Map associated
+     *                             with each group.
+     * @param groupTo              The group views that should display column in the "groupFrom"
+     *                             parameter. These should all be TextViews. The first N views in
+     *                             this list are given the values of the first N columns in the
+     *                             groupFrom parameter.
+     * @param expandedGroupLayout  resource identifier of a view layout that defines the views
+     *                             for an expanded group. The layout file should include at least
+     *                             those named views defined in "groupTo"
+     * @param collapsedGroupLayout resource identifier of a view layout that defines the views
+     *                             for a collapsed group. The layout file should include at least
+     *                             those named views defined in "groupTo"
+     * @param childFrom            A list of keys that will be fetched from the Map associated
+     *                             with each child.
+     * @param childTo              The child views that should display column in the "childFrom"
+     *                             parameter. These should all be TextViews. The first N views in
+     *                             this list are given the values of the first N columns in the
+     *                             childFrom parameter.
+     * @param childLayout          resource identifier of a view layout that defines the views
+     *                             for a child. The layout file should include at least those
+     *                             named views defined in "childTo"
      */
     public ModelGroupAdapter(Context context, List<T> groupData, int expandedGroupLayout,
                              int collapsedGroupLayout, String[] groupFrom, int[] groupTo, int childLayout, String[] childFrom,
                              int[] childTo) {
         this(context, groupData, expandedGroupLayout, collapsedGroupLayout, groupFrom, groupTo, childLayout,
-            childLayout, childFrom, childTo);
+                childLayout, childFrom, childTo);
     }
 
     /**
      * Constructor
-     * 
-     * @param context
-     *            The context where the {@link android.widget.ExpandableListView} associated
-     *            with this {@link ModelGroupAdapter} is running
-     * @param groupData
-     *            A List of Maps. Each entry in the List corresponds to one
-     *            group in the list. The Maps contain the data for each group,
-     *            and should include all the entries specified in "groupFrom"
-     * @param groupFrom
-     *            A list of keys that will be fetched from the Map associated
-     *            with each group.
-     * @param groupTo
-     *            The group views that should display column in the "groupFrom"
-     *            parameter. These should all be TextViews. The first N views in
-     *            this list are given the values of the first N columns in the
-     *            groupFrom parameter.
-     * @param expandedGroupLayout
-     *            resource identifier of a view layout that defines the views
-     *            for an expanded group. The layout file should include at least
-     *            those named views defined in "groupTo"
-     * @param collapsedGroupLayout
-     *            resource identifier of a view layout that defines the views
-     *            for a collapsed group. The layout file should include at least
-     *            those named views defined in "groupTo"
-     * @param childFrom
-     *            A list of keys that will be fetched from the Map associated
-     *            with each child.
-     * @param childTo
-     *            The child views that should display column in the "childFrom"
-     *            parameter. These should all be TextViews. The first N views in
-     *            this list are given the values of the first N columns in the
-     *            childFrom parameter.
-     * @param childLayout
-     *            resource identifier of a view layout that defines the views
-     *            for a child (unless it is the last child within a group, in
-     *            which case the lastChildLayout is used). The layout file
-     *            should include at least those named views defined in "childTo"
-     * @param lastChildLayout
-     *            resource identifier of a view layout that defines the views
-     *            for the last child within each group. The layout file should
-     *            include at least those named views defined in "childTo"
+     *
+     * @param context              The context where the {@link android.widget.ExpandableListView} associated
+     *                             with this {@link ModelGroupAdapter} is running
+     * @param groupData            A List of Maps. Each entry in the List corresponds to one
+     *                             group in the list. The Maps contain the data for each group,
+     *                             and should include all the entries specified in "groupFrom"
+     * @param groupFrom            A list of keys that will be fetched from the Map associated
+     *                             with each group.
+     * @param groupTo              The group views that should display column in the "groupFrom"
+     *                             parameter. These should all be TextViews. The first N views in
+     *                             this list are given the values of the first N columns in the
+     *                             groupFrom parameter.
+     * @param expandedGroupLayout  resource identifier of a view layout that defines the views
+     *                             for an expanded group. The layout file should include at least
+     *                             those named views defined in "groupTo"
+     * @param collapsedGroupLayout resource identifier of a view layout that defines the views
+     *                             for a collapsed group. The layout file should include at least
+     *                             those named views defined in "groupTo"
+     * @param childFrom            A list of keys that will be fetched from the Map associated
+     *                             with each child.
+     * @param childTo              The child views that should display column in the "childFrom"
+     *                             parameter. These should all be TextViews. The first N views in
+     *                             this list are given the values of the first N columns in the
+     *                             childFrom parameter.
+     * @param childLayout          resource identifier of a view layout that defines the views
+     *                             for a child (unless it is the last child within a group, in
+     *                             which case the lastChildLayout is used). The layout file
+     *                             should include at least those named views defined in "childTo"
+     * @param lastChildLayout      resource identifier of a view layout that defines the views
+     *                             for the last child within each group. The layout file should
+     *                             include at least those named views defined in "childTo"
      */
     public ModelGroupAdapter(Context context, List<T> groupData, int expandedGroupLayout,
                              int collapsedGroupLayout, String[] groupFrom, int[] groupTo, int childLayout, int lastChildLayout,
@@ -235,7 +208,7 @@ public class ModelGroupAdapter<T extends BaseParentModel<T1>,T1 extends BaseMode
     }
 
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
-            ViewGroup parent) {
+                             ViewGroup parent) {
         View v;
         if (convertView == null) {
             v = newChildView(isLastChild, parent);
@@ -248,11 +221,9 @@ public class ModelGroupAdapter<T extends BaseParentModel<T1>,T1 extends BaseMode
 
     /**
      * Instantiates a new View for a child.
-     * 
-     * @param isLastChild
-     *            Whether the child is the last child within its group.
-     * @param parent
-     *            The eventual parent of this new View.
+     *
+     * @param isLastChild Whether the child is the last child within its group.
+     * @param parent      The eventual parent of this new View.
      * @return A new child View
      */
     public View newChildView(boolean isLastChild, ViewGroup parent) {
@@ -315,7 +286,8 @@ public class ModelGroupAdapter<T extends BaseParentModel<T1>,T1 extends BaseMode
     }
 
     public int getChildrenCount(int groupPosition) {
-        return mGroupData.get(groupPosition).getChildren().size();
+        final List<T1> children = mGroupData.get(groupPosition).getChildren();
+        return children == null ? 0 : children.size();
     }
 
     public Object getGroup(int groupPosition) {
@@ -323,7 +295,7 @@ public class ModelGroupAdapter<T extends BaseParentModel<T1>,T1 extends BaseMode
     }
 
     public int getGroupCount() {
-        return mGroupData.size();
+        return mGroupData == null ? 0 : mGroupData.size();
     }
 
     public long getGroupId(int groupPosition) {
@@ -343,11 +315,9 @@ public class ModelGroupAdapter<T extends BaseParentModel<T1>,T1 extends BaseMode
 
     /**
      * Instantiates a new View for a group.
-     * 
-     * @param isExpanded
-     *            Whether the group is currently expanded.
-     * @param parent
-     *            The eventual parent of this new View.
+     *
+     * @param isExpanded Whether the group is currently expanded.
+     * @param parent     The eventual parent of this new View.
      * @return A new group View
      */
     public View newGroupView(boolean isExpanded, ViewGroup parent) {
@@ -364,9 +334,8 @@ public class ModelGroupAdapter<T extends BaseParentModel<T1>,T1 extends BaseMode
 
     /**
      * Returns the {@link ModelAdapter.ViewBinder} used to bind data to views.
-     * 
+     *
      * @return a ViewBinder or null if the binder does not exist
-     * 
      * @see #setViewBinder(ModelAdapter.ViewBinder)
      */
     public ModelAdapter.ViewBinder getViewBinder() {
@@ -375,11 +344,9 @@ public class ModelGroupAdapter<T extends BaseParentModel<T1>,T1 extends BaseMode
 
     /**
      * Sets the binder used to bind data to views.
-     * 
-     * @param viewBinder
-     *            the binder used to bind data to views, can be null to remove
-     *            the existing binder
-     * 
+     *
+     * @param viewBinder the binder used to bind data to views, can be null to remove
+     *                   the existing binder
      * @see #getViewBinder()
      */
     public void setViewBinder(ModelAdapter.ViewBinder viewBinder) {
@@ -390,15 +357,12 @@ public class ModelGroupAdapter<T extends BaseParentModel<T1>,T1 extends BaseMode
      * Called by bindView() to set the image for an ImageView but only if there
      * is no existing ViewBinder or if the existing ViewBinder cannot handle
      * binding to an ImageView.
-     * 
+     * <p/>
      * This method is called instead of {@link #setViewImage(android.widget.ImageView, String)}
      * if the supplied data is an int or Integer.
-     * 
-     * @param v
-     *            ImageView to receive an image
-     * @param value
-     *            the value retrieved from the data set
-     * 
+     *
+     * @param v     ImageView to receive an image
+     * @param value the value retrieved from the data set
      * @see #setViewImage(android.widget.ImageView, String)
      */
     public void setViewImage(ImageView v, int value) {
@@ -409,18 +373,15 @@ public class ModelGroupAdapter<T extends BaseParentModel<T1>,T1 extends BaseMode
      * Called by bindView() to set the image for an ImageView but only if there
      * is no existing ViewBinder or if the existing ViewBinder cannot handle
      * binding to an ImageView.
-     * 
+     * <p/>
      * By default, the value will be treated as an image resource. If the value
      * cannot be used as an image resource, the value is used as an image Uri.
-     * 
+     * <p/>
      * This method is called instead of {@link #setViewImage(android.widget.ImageView, int)} if
      * the supplied data is not an int or Integer.
-     * 
-     * @param v
-     *            ImageView to receive an image
-     * @param value
-     *            the value retrieved from the data set
-     * 
+     *
+     * @param v     ImageView to receive an image
+     * @param value the value retrieved from the data set
      * @see #setViewImage(android.widget.ImageView, int)
      */
     public void setViewImage(ImageView v, String value) {
@@ -435,11 +396,9 @@ public class ModelGroupAdapter<T extends BaseParentModel<T1>,T1 extends BaseMode
      * Called by bindView() to set the text for a TextView but only if there is
      * no existing ViewBinder or if the existing ViewBinder cannot handle
      * binding to a TextView.
-     * 
-     * @param v
-     *            TextView to receive text
-     * @param text
-     *            the text to be set for the TextView
+     *
+     * @param v    TextView to receive text
+     * @param text the text to be set for the TextView
      */
     public void setViewText(TextView v, String text) {
         v.setText(text);

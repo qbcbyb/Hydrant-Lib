@@ -1,10 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="cn.qbcbyb.lib.MainActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="cn.qbcbyb.lib.MainActivity">
 
+    <!--<include layout="@layout/default_toobar"/>-->
     <!--<com.alexvasilkov.foldablelayout.FoldableListLayout-->
     <!--android:id="@+id/foldable_list"-->
     <!--android:layout_width="match_parent"-->
@@ -18,4 +20,4 @@
         android:layout_marginTop="-1px"
         app:itemMargin="1px"
         app:numColumns="2"/>
-</RelativeLayout>
+</LinearLayout>

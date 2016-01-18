@@ -2,7 +2,7 @@ package cn.qbcbyb.library.model;
 
 import java.util.List;
 
-public class BaseParentModel<T extends BaseModel> extends BaseModel {
+public abstract class BaseParentModel<T extends BaseModel> extends BaseModel {
 
     private List<T> children;
 

@@ -67,7 +67,7 @@ public class MetroActivity extends CustomViewActionBarActivity implements Stagge
 //                            final PainterModel painter = initConfig.getPainter();
 //                            txtUserName.setText(painter.getName());
 //                            txtUserDesc.setText(painter.getDescri());
-//                            ImageManager.setImage(imgUserImg, painter.getHead(), SyApplication.getDefaultDiaplayImageOptionsBuilder()
+//                            ImageManager.setImage(imgUserImg, painter.getHead(), SyApplication.getDefaultDisplayImageOptionsBuilder()
 //                                    .showImageOnLoading(R.drawable.main_user_icon)
 //                                    .showImageForEmptyUri(R.drawable.main_user_icon)
 //                                    .showImageOnFail(R.drawable.main_user_icon)

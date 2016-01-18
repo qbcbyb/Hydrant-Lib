@@ -1,7 +1,5 @@
 package cn.qbcbyb.library.model;
 
-import android.database.Cursor;
-
 import com.alibaba.fastjson.JSON;
 
 import java.io.Serializable;
@@ -11,7 +9,7 @@ import java.text.MessageFormat;
 
 import cn.qbcbyb.library.util.LinkedCachedHashMap;
 
-public class BaseModel implements Serializable {
+public abstract class BaseModel implements Serializable {
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -31,7 +29,7 @@ public class BaseModel implements Serializable {
         for (int i = 0; i < length; i++) {
             String fieldName = fields[i];
             if (sourceObj == null) {
-                break;
+                return null;
             }
             Object result = getObject(sourceObj, fieldName);
             if (i != length - 1) {
@@ -50,15 +48,15 @@ public class BaseModel implements Serializable {
             String methodName = MessageFormat.format(METHODNAME, clazz.getName(), fieldName);
             Method method = cacheMap.get(methodName);
             if (method == null) {
+                String methodNameSuffix = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
                 try {
-                    method = clazz.getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1));
+                    method = clazz.getMethod("get" + methodNameSuffix);
                 } catch (NoSuchMethodException e) {
                     try {
-                        method = clazz.getMethod("is" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1));
+                        method = clazz.getMethod("is" + methodNameSuffix);
                     } catch (NoSuchMethodException e1) {
                         try {
-                            method = clazz.getMethod("has" + fieldName.substring(0, 1).toUpperCase()
-                                    + fieldName.substring(1));
+                            method = clazz.getMethod("has" + methodNameSuffix);
                         } catch (NoSuchMethodException e2) {
                         }
                     }
@@ -78,45 +76,6 @@ public class BaseModel implements Serializable {
             e.printStackTrace();
         }
         return value;
-    }
-
-    public void fromCursor(Cursor cursor) {
-        String[] fieldNames = cursor.getColumnNames();
-        for (int j = 0; j < fieldNames.length; j++) {
-            String fieldName = fieldNames[j];
-            int i = cursor.getColumnIndex(fieldName);
-            try {
-                Class<?> clazz = this.getClass();
-                Class<?> type = clazz.getDeclaredField(fieldName).getType();
-                Method method = clazz.getMethod(
-                        "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), type);
-                if (type == String.class) {
-                    method.invoke(this, cursor.getString(i));
-                } else if (type == double.class || type == Double.class) {
-                    method.invoke(this, cursor.getDouble(i));
-                } else if (type == int.class || type == Integer.class) {
-                    method.invoke(this, cursor.getInt(i));
-                } else if (type == float.class || type == Float.class) {
-                    method.invoke(this, cursor.getFloat(i));
-                } else if (type == long.class || type == Long.class) {
-                    method.invoke(this, cursor.getLong(i));
-                } else if (type == short.class || type == Short.class) {
-                    method.invoke(this, cursor.getShort(i));
-                }
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public <T> T fromJson(String value) {

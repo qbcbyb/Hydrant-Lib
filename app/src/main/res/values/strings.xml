@@ -8,5 +8,11 @@
     <string name="title_activity_main_activity2">MainActivity2</string>
     <string name="title_activity_main_activity3">MainActivity3</string>
     <string name="title_activity_main_activity4">MainActivity4Activity</string>
+    <string name="title_activity_main_activity42">MainActivity42Activity</string>
+    <string name="title_activity_main_activity43">MainActivity43</string>
+    <string name="title_activity_video">VideoActivity</string>
+
+    <string name="app_auth">cn.qbcbyb.lib</string>
+    <string name="action_refresh">Refresh</string>
 
 </resources>

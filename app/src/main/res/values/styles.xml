@@ -1,20 +1,26 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:fitsSystemWindows">true</item>
-        <item name="android:actionBarStyle">@style/Widget.AppCompat.ActionBar.WithCustomBgColor
-        </item>
-        <item name="actionBarStyle">@style/Widget.AppCompat.ActionBar.WithCustomBgColor</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+        <!--<item name="android:fitsSystemWindows">true</item>-->
+        <!--<item name="android:actionBarStyle">@style/Widget.AppCompat.ActionBar.WithCustomBgColor-->
+        <!--</item>-->
+        <!--<item name="actionBarStyle">@style/Widget.AppCompat.ActionBar.WithCustomBgColor</item>-->
+        <!--<item name="colorPrimary">@color/red</item>-->
+        <!--<item name="android:colorPrimary">@color/red</item>-->
+        <!--<item name="statusBarColor">@color/red</item>-->
+        <!--<item name="android:statusBarColor">@color/red</item>-->
+        <!--<item name="colorPrimaryDark">@color/red</item>-->
+        <!--<item name="android:colorPrimaryDark">@color/red</item>-->
     </style>
 
-    <style name="Widget.AppCompat.ActionBar.WithCustomBgColor">
-        <item name="android:background">@color/red</item>
-        <item name="background">@color/red</item>
-    </style>
+    <!--<style name="Widget.AppCompat.ActionBar.WithCustomBgColor">-->
+        <!--<item name="android:background">@color/red</item>-->
+        <!--<item name="background">@color/red</item>-->
+    <!--</style>-->
 
-    <color name="red">#f00</color>
+    <!--<color name="red">#f00</color>-->
 </resources>

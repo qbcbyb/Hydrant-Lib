@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 22
     buildToolsVersion "20.0.0"
 
     defaultConfig {
         applicationId "cn.qbcbyb.lib"
-        minSdkVersion 8
-        targetSdkVersion 19
+        minSdkVersion 19
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }

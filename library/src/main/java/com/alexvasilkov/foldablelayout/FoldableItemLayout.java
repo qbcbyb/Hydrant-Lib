@@ -343,7 +343,7 @@ public class FoldableItemLayout extends FrameLayout {
 
         private void applyRollingDistance(float distance, float scale) {
             // applying translation
-            ViewHelper.setTranslationY(this,(int) (distance * scale + 0.5f));
+            ViewHelper.setTranslationY(this, (int) (distance * scale + 0.5f));
 
             // computing clipping for top view (bottom clipping will be 1 - topClipping)
             final int h = getHeight() / 2;

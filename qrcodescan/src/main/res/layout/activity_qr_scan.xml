@@ -2,12 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/capture_containter"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:layout_marginBottom="200dp">
 
-    <SurfaceView
-        android:id="@+id/capture_preview"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:clipChildren="true">
+
+        <SurfaceView
+            android:id="@+id/capture_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/top_mask"
@@ -15,7 +22,8 @@
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:background="@drawable/scan_mask"
-        android:contentDescription="@string/app_name" />
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitCenter" />
 
     <RelativeLayout
         android:id="@+id/capture_crop_layout"
@@ -24,7 +32,7 @@
         android:layout_below="@id/top_mask"
         android:layout_centerHorizontal="true"
         android:background="@drawable/capture"
-        android:contentDescription="@string/app_name" >
+        android:contentDescription="@string/app_name">
 
         <ImageView
             android:id="@+id/capture_scan_line"
@@ -68,11 +76,12 @@
         android:contentDescription="@string/app_name" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/capture_crop_layout"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
+        android:background="#666"
+        android:gravity="center"
         android:text="@string/scan_tips"
         android:textColor="@android:color/white"
         android:textSize="15sp" />

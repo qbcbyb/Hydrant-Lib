@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="cn.qbcbyb.lib">
+    package="cn.qbcbyb.lib">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- 【必须】 信鸽SDK所需权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".AppCustom"
@@ -17,30 +32,47 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MetroActivity"
-            android:label="MetroActivity">
-        </activity>
+            android:label="MetroActivity" />
         <activity
             android:name=".MainActivity3"
-            android:label="@string/title_activity_main_activity3"/>
+            android:label="@string/title_activity_main_activity3" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+            android:label="@string/title_activity_main" />
         <activity
             android:name=".MainActivity2"
-            android:label="@string/title_activity_main_activity2"/>
+            android:label="@string/title_activity_main_activity2" />
         <activity
             android:name="com.zbar.lib.CaptureActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"/>
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
             android:name=".MainActivity4Activity"
-            android:label="@string/title_activity_main_activity4">
+            android:label="@string/title_activity_main_activity4" />
+        <activity
+            android:name=".MainActivity42Activity"
+            android:label="@string/title_activity_main_activity42" />
+        <activity
+            android:name=".MainActivity43"
+            android:label="@string/title_activity_main_activity43" />
+        <activity android:name=".MainFoldActivity" />
+        <activity
+            android:name=".VideoActivity"
+            android:label="@string/title_activity_video"></activity>
+
+        <!--<provider-->
+        <!--android:name="com.activeandroid.content.ContentProvider"-->
+        <!--android:authorities="@string/app_auth"-->
+        <!--android:exported="false" />-->
+
+        <activity android:name=".Main4Activity"></activity>
+
+        <activity android:name=".WebViewActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

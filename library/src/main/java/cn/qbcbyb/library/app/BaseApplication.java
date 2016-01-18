@@ -36,7 +36,7 @@ import cn.qbcbyb.library.util.StringUtils;
 
 public class BaseApplication extends Application implements Thread.UncaughtExceptionHandler {
 
-    public static final DisplayImageOptions.Builder getDefaultDiaplayImageOptionsBuilder() {
+    public static final DisplayImageOptions.Builder getDefaultDisplayImageOptionsBuilder() {
         return new DisplayImageOptions.Builder()
                 .showImageOnLoading(BaseApplication.getInstance(BaseApplication.class).getDefaultLoadingRes())
                 .showImageForEmptyUri(BaseApplication.getInstance(BaseApplication.class).getDefaultLoadingRes())
@@ -103,18 +103,22 @@ public class BaseApplication extends Application implements Thread.UncaughtExcep
         Thread.setDefaultUncaughtExceptionHandler(this);
         instance = this;
         DebugUtil.setDebug(isDebugEable());
-        DisplayImageOptions displayImageOptions = getDefaultDiaplayImageOptionsBuilder().build();
         ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(getApplicationContext());
-        builder.memoryCacheSize((int) Runtime.getRuntime().maxMemory() / 8)
-                .diskCache(new UnlimitedDiscCache(getAppPathFile("cache_image")))
-//                .diskCacheSize(100 * 1024 * 1024)
-//                .diskCacheFileCount(300)
-                .defaultDisplayImageOptions(displayImageOptions);
         if (DebugUtil.isDebug()) {
             builder.writeDebugLogs();
         }
+        setImageLoaderConfiguration(builder);
         ImageLoaderConfiguration configuration = builder.build();
         ImageLoader.getInstance().init(configuration);
+    }
+
+    protected void setImageLoaderConfiguration(ImageLoaderConfiguration.Builder builder) {
+        DisplayImageOptions displayImageOptions = getDefaultDisplayImageOptionsBuilder().build();
+        builder.memoryCacheSize((int) Runtime.getRuntime().maxMemory() / 8)
+                .diskCache(new UnlimitedDiscCache(getAppImagePath()))
+//                .diskCacheSize(100 * 1024 * 1024)
+//                .diskCacheFileCount(300)
+                .defaultDisplayImageOptions(displayImageOptions);
     }
 
     @Override

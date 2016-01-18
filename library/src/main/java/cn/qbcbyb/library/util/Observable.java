@@ -15,7 +15,11 @@ public abstract class Observable<T> {
      * The list of observers.  An observer can be in the list at most
      * once and will never be null.
      */
-    protected final ArrayList<T> mObservers = new ArrayList<T>();
+    private final ArrayList<T> mObservers = new ArrayList<T>();
+
+    protected ArrayList<T> getObservers() {
+        return mObservers;
+    }
 
     /**
      * Adds an observer to the list. The observer cannot be null and it must not already
@@ -34,6 +38,19 @@ public abstract class Observable<T> {
                 throw new IllegalStateException("Observer " + observer + " is already registered.");
             }
             mObservers.add(observer);
+        }
+    }
+
+    public void unregisterObserverIfNecessary(T observer) {
+        if (observer == null) {
+            throw new IllegalArgumentException("The observer is null.");
+        }
+        synchronized (mObservers) {
+            int index = mObservers.indexOf(observer);
+            if (index == -1) {
+                return;
+            }
+            mObservers.remove(index);
         }
     }
 

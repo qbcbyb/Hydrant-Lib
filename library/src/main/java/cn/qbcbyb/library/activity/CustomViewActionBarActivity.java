@@ -1,36 +1,22 @@
 package cn.qbcbyb.library.activity;
 
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.support.v7.app.ActionBar;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cn.qbcbyb.library.R;
-import cn.qbcbyb.library.view.ImageViewCustom;
 
 public abstract class CustomViewActionBarActivity extends BaseActivity {
 
-    private ActionBar actionBar = null;
     private TextView titleView = null;
     private ImageView leftImageView = null;
     private ImageView rightImageView = null;
     private TextView leftTextView;
     private TextView rightTextView;
     private RelativeLayout customActionBar = null;
-    private int actionBarBtnPadding = 0;//DP
-
-    public int getActionBarBtnPadding() {
-        if (actionBarBtnPadding == 0) {
-            actionBarBtnPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
-        }
-        return actionBarBtnPadding;
-    }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -48,6 +34,7 @@ public abstract class CustomViewActionBarActivity extends BaseActivity {
             }
         }
     };
+    private LinearLayout linearLayoutContentView;
 
     protected void onLeftClick(View v) {
         onBackPressed();
@@ -60,75 +47,72 @@ public abstract class CustomViewActionBarActivity extends BaseActivity {
     }
 
     protected void setCustomActionBar(RelativeLayout customActionBar) {
-        if (this.customActionBar != customActionBar) {
+        if (customActionBar != null && this.customActionBar != customActionBar) {
             this.customActionBar = customActionBar;
-            titleView = null;
-            leftImageView = null;
-            rightImageView = null;
-            leftTextView = null;
-            rightTextView = null;
+            titleView = (TextView) customActionBar.findViewById(R.id.toolbar_titleTextView);
+            leftImageView = (ImageView) customActionBar.findViewById(R.id.toolbar_leftImageView);
+            rightImageView = (ImageView) customActionBar.findViewById(R.id.toolbar_rightImageView);
+            leftTextView = (TextView) customActionBar.findViewById(R.id.toolbar_leftTextView);
+            rightTextView = (TextView) customActionBar.findViewById(R.id.toolbar_rightTextView);
+            if (titleView != null) {
+                titleView.setText(getTitle());
+                titleView.setOnClickListener(onClickListener);
+            }
+            if (leftImageView != null) {
+                leftImageView.setOnClickListener(onClickListener);
+            }
+            if (rightImageView != null) {
+                rightImageView.setOnClickListener(onClickListener);
+            }
+            if (leftTextView != null) {
+                leftTextView.setOnClickListener(onClickListener);
+            }
+            if (rightTextView != null) {
+                rightTextView.setOnClickListener(onClickListener);
+            }
         }
     }
 
-    protected ActionBar getCustomActionBar() {
-        return actionBar;
+    private LinearLayout getContentViewWithToolbar() {
+        if (linearLayoutContentView == null) {
+            linearLayoutContentView = new LinearLayout(this);
+            linearLayoutContentView.setOrientation(LinearLayout.VERTICAL);
+            View.inflate(this, R.layout.default_toolbar_ios, linearLayoutContentView);
+        }
+        return linearLayoutContentView;
     }
 
-    protected Integer getActionBarBtnColor() {
-        return null;
+    @Override
+    public void setContentView(int layoutResID) {
+        LinearLayout contentViewWithToolbar = getContentViewWithToolbar();
+        View.inflate(this, layoutResID, contentViewWithToolbar);
+        super.setContentView(contentViewWithToolbar);
     }
 
-    protected Integer getActionBarTitleColor() {
-        return null;
+    @Override
+    public void setContentView(View view) {
+        if (view.getLayoutParams() == null) {
+            view.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+        }
+        LinearLayout contentViewWithToolbar = getContentViewWithToolbar();
+        contentViewWithToolbar.addView(view);
+        super.setContentView(contentViewWithToolbar);
+    }
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        if (view.getLayoutParams() == null) {
+            view.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+        }
+        LinearLayout contentViewWithToolbar = getContentViewWithToolbar();
+        contentViewWithToolbar.addView(view);
+        super.setContentView(contentViewWithToolbar, params);
     }
 
     @Override
     protected void afterCreate() {
         super.afterCreate();
-        initActionBar();
-        if (customActionBar != null) {
-            initActionBarView();
-        }
-    }
-
-    @Override
-    protected Drawable getStatusBarTintDrawable() {
-        return getActionBarBackground();
-    }
-
-    protected Drawable getActionBarBackground() {
-        int[] android_styleable_ActionBar = {android.R.attr.background};
-        // Need to get resource id of style pointed to from actionBarStyle
-        TypedValue outValue = new TypedValue();
-        getTheme().resolveAttribute(android.R.attr.actionBarStyle, outValue, true);
-        // Now get action bar style values...
-        TypedArray abStyle = getTheme().obtainStyledAttributes(outValue.resourceId, android_styleable_ActionBar);
-        try {
-            return abStyle.getDrawable(0);
-        } finally {
-            abStyle.recycle();
-        }
-    }
-
-    protected void initActionBar() {
-        if (actionBar == null) {
-            actionBar = getSupportActionBar();
-        }
-        if (actionBar != null) {
-            try {
-                actionBar.setDisplayShowTitleEnabled(false);
-                actionBar.setDisplayShowHomeEnabled(false);
-                actionBar.setDisplayUseLogoEnabled(false);
-                actionBar.setDisplayShowCustomEnabled(true);
-                RelativeLayout customViewLayout = new RelativeLayout(this);
-                ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                        ActionBar.LayoutParams.MATCH_PARENT);
-                actionBar.setCustomView(customViewLayout, lp);
-                setCustomActionBar(customViewLayout);
-            } catch (NullPointerException e) {
-                actionBar = null;
-            }
-        }
+        initActionBarView();
     }
 
     public TextView getTitleView() {
@@ -136,97 +120,23 @@ public abstract class CustomViewActionBarActivity extends BaseActivity {
     }
 
     public TextView getLeftTextView() {
-        if (leftTextView == null) {
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-            leftTextView = generateTextViewInActionBar(layoutParams);
-            leftTextView.setPadding(getActionBarBtnPadding(), 0, 0, 0);
-            if (getActionBarBtnColor() != null) {
-                leftTextView.setTextColor(getActionBarBtnColor());
-            }
-            leftTextView.setOnClickListener(onClickListener);
-        }
         return leftTextView;
     }
 
     public TextView getRightTextView() {
-        if (rightTextView == null) {
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-            rightTextView = generateTextViewInActionBar(layoutParams);
-            rightTextView.setPadding(0, 0, getActionBarBtnPadding(), 0);
-            if (getActionBarBtnColor() != null) {
-                rightTextView.setTextColor(getActionBarBtnColor());
-            }
-            rightTextView.setOnClickListener(onClickListener);
-        }
         return rightTextView;
     }
 
     public ImageView getLeftImageView() {
-        if (leftImageView == null) {
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-            leftImageView = generateImageViewInActionBar(layoutParams);
-            leftImageView.setPadding(getActionBarBtnPadding(), getActionBarBtnPadding(), 0, getActionBarBtnPadding());
-            leftImageView.setOnClickListener(onClickListener);
-        }
         return leftImageView;
     }
 
     public ImageView getRightImageView() {
-        if (rightImageView == null) {
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-            rightImageView = generateImageViewInActionBar(layoutParams);
-            rightImageView.setPadding(0, getActionBarBtnPadding(), getActionBarBtnPadding(), getActionBarBtnPadding());
-            rightImageView.setOnClickListener(onClickListener);
-        }
         return rightImageView;
     }
 
     protected void initActionBarView() {
-        initActionBarTitle();
-    }
-
-    private void initActionBarTitle() {
-        if (titleView == null) {
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-            layoutParams.setMargins(100, 0, 100, 0);
-            titleView = generateTextViewInActionBar(layoutParams);
-            titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.abc_action_bar_title_text_size));
-            titleView.setText(getTitle());
-            if (getActionBarTitleColor() != null) {
-                titleView.setTextColor(getActionBarTitleColor());
-            }
-            titleView.setOnClickListener(onClickListener);
-        }
-    }
-
-    private TextView generateTextViewInActionBar(RelativeLayout.LayoutParams layoutParams) {
-        TextView textView = new TextView(this);
-        textView.setGravity(Gravity.CENTER);
-        textView.setLines(1);
-        addCustomViewToActionBar(textView, layoutParams);
-        return textView;
-    }
-
-    private ImageView generateImageViewInActionBar(RelativeLayout.LayoutParams layoutParams) {
-        ImageView imageView = new ImageViewCustom(this);
-        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        addCustomViewToActionBar(imageView, layoutParams);
-        return imageView;
-    }
-
-    protected void addCustomViewToActionBar(View view) {
-        if (customActionBar != null) {
-            customActionBar.addView(view);
-        }
-    }
-
-    protected void addCustomViewToActionBar(View view, ViewGroup.LayoutParams layoutParams) {
-        if (customActionBar != null) {
-            customActionBar.addView(view, layoutParams);
-        }
+        setCustomActionBar((RelativeLayout) findViewById(R.id.toolbar));
     }
 
     @Override

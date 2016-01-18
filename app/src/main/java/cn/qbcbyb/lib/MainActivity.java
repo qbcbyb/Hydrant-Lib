@@ -57,7 +57,6 @@ public class MainActivity extends CustomViewActionBarActivity implements PullToR
         super.initActionBarView();
         ImageView leftImageView = getLeftImageView();
         leftImageView.setImageResource(R.drawable.title_back);
-        leftImageView.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 
     @Override
@@ -264,7 +263,6 @@ public class MainActivity extends CustomViewActionBarActivity implements PullToR
 
         private static final long serialVersionUID = 124479061512111904L;
 
-        private Integer id;
         private String title;
         private String subtitle;
         private String url;
@@ -284,14 +282,6 @@ public class MainActivity extends CustomViewActionBarActivity implements PullToR
         private Integer picHeight;
         private Integer picWidth;
         private String period;
-
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
-        }
 
         public String getTitle() {
             return title;

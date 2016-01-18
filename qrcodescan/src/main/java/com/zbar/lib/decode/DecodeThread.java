@@ -2,8 +2,6 @@ package com.zbar.lib.decode;
 
 import java.util.concurrent.CountDownLatch;
 
-import com.zbar.lib.CaptureActivity;
-
 import android.os.Handler;
 import android.os.Looper;
 
@@ -18,12 +16,12 @@ import android.os.Looper;
  */
 final class DecodeThread extends Thread {
 
-	CaptureActivity activity;
+	CaptureContainer captureContainer;
 	private Handler handler;
 	private final CountDownLatch handlerInitLatch;
 
-	DecodeThread(CaptureActivity activity) {
-		this.activity = activity;
+	DecodeThread(CaptureContainer captureContainer) {
+		this.captureContainer = captureContainer;
 		handlerInitLatch = new CountDownLatch(1);
 	}
 
@@ -39,7 +37,7 @@ final class DecodeThread extends Thread {
 	@Override
 	public void run() {
 		Looper.prepare();
-		handler = new DecodeHandler(activity);
+		handler = new DecodeHandler(captureContainer);
 		handlerInitLatch.countDown();
 		Looper.loop();
 	}

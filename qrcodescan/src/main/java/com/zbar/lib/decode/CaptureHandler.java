@@ -16,19 +16,19 @@ import com.zbar.lib.camera.CameraManager;
  * <p/>
  * 描述: 扫描消息转发
  */
-public final class CaptureActivityHandler extends Handler {
+public final class CaptureHandler extends Handler {
 
     DecodeThread decodeThread = null;
-    CaptureActivity activity = null;
+    CaptureContainer captureContainer = null;
     private State state;
 
     private enum State {
         PREVIEW, SUCCESS, DONE
     }
 
-    public CaptureActivityHandler(CaptureActivity activity) {
-        this.activity = activity;
-        decodeThread = new DecodeThread(activity);
+    public CaptureHandler(CaptureContainer captureContainer) {
+        this.captureContainer = captureContainer;
+        decodeThread = new DecodeThread(captureContainer);
         decodeThread.start();
         state = State.SUCCESS;
         CameraManager.get().startPreview();
@@ -46,7 +46,7 @@ public final class CaptureActivityHandler extends Handler {
             restartPreviewAndDecode();
         } else if (message.what == R.id.decode_succeeded) {
             state = State.SUCCESS;
-            activity.handleDecode((String) message.obj);// 解析成功，回调
+            captureContainer.handleDecode((String) message.obj);// 解析成功，回调
         } else if (message.what == R.id.decode_failed) {
             state = State.PREVIEW;
             CameraManager.get().requestPreviewFrame(decodeThread.getHandler(),

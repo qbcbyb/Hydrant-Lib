@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary">
+
+    <TextView
+        android:id="@+id/toolbar_leftTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/toolbar_button_horizontal_padding"
+        android:lines="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/toolbar_rightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:paddingRight="@dimen/toolbar_button_horizontal_padding"
+        android:lines="1"
+        android:gravity="center"/>
+
+    <cn.qbcbyb.library.view.ImageViewCustom
+        android:id="@+id/toolbar_leftImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/toolbar_button_horizontal_padding"
+        android:paddingTop="@dimen/toolbar_button_vertical_padding"
+        android:paddingBottom="@dimen/toolbar_button_vertical_padding"
+        android:scaleType="fitCenter"/>
+
+    <cn.qbcbyb.library.view.ImageViewCustom
+        android:id="@+id/toolbar_rightImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:paddingRight="@dimen/toolbar_button_horizontal_padding"
+        android:paddingTop="@dimen/toolbar_button_vertical_padding"
+        android:paddingBottom="@dimen/toolbar_button_vertical_padding"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:id="@+id/toolbar_titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/toolbar_title_horizontal_margin"
+        android:layout_marginRight="@dimen/toolbar_title_horizontal_margin"
+        android:lines="1"
+        android:gravity="center"
+        android:textSize="@dimen/abc_text_size_title_material_toolbar"/>
+</RelativeLayout>

@@ -10,4 +10,10 @@ public class AppCustom extends BaseApplication {
     public boolean isDebugEable() {
         return BuildConfig.DEBUG;
     }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+    }
 }
