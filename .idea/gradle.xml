@@ -18,7 +18,9 @@
             <option value="$PROJECT_DIR$/jazzylist" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/qrcodescan" />
+            <option value="$PROJECT_DIR$/requestloader" />
             <option value="$PROJECT_DIR$/tecentweibo" />
+            <option value="$PROJECT_DIR$/viewlibrary" />
           </set>
         </option>
         <option name="myModules">
@@ -33,7 +35,9 @@
             <option value="$PROJECT_DIR$/jazzylist" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/qrcodescan" />
+            <option value="$PROJECT_DIR$/requestloader" />
             <option value="$PROJECT_DIR$/tecentweibo" />
+            <option value="$PROJECT_DIR$/viewlibrary" />
           </set>
         </option>
       </GradleProjectSettings>

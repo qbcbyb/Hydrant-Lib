@@ -77,7 +77,7 @@ public class SharePlugin {
     private static final Object lock = new Object();
     private static SharePlugin instance;
 
-    public static final SharePlugin getInstance() {
+    public static SharePlugin getInstance() {
         synchronized (lock) {
             if (instance == null) {
                 instance = new SharePlugin();

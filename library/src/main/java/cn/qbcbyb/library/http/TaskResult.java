@@ -3,7 +3,7 @@ package cn.qbcbyb.library.http;
 /**
  * Created by 秋云 on 2014/10/20.
  */
-class TaskResult<T> {
+public class TaskResult<T> {
     private boolean success = false;
     private T data;
     private Exception exception;

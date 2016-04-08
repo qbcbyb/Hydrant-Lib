@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    
+    <Button 
+        android:id="@+id/button_image_loading"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Load Image"
+        />
+    
+    <Button 
+        android:id="@+id/button_string_request"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="String Request Using PUT Method"
+        />
+      
+    <Button 
+        android:id="@+id/button_json_request"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Json Request Using GET Method"
+        />
+    <Button 
+        android:id="@+id/button_gson"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Gson Parsing"
+        />
+    <Button 
+        android:id="@+id/button_cache"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Cache Example"
+        />
+    
+    </LinearLayout>
+

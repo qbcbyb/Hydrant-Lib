@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:2.1.0-alpha4'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -23,8 +23,8 @@ allprojects {
         maven { url "http://localhost:8081/nexus/content/groups/public/" }
         jcenter()
     }
-    group = 'com.github.qbcbyb'
-    version = '1.0.3-SNAPSHOT'
+    group = POM_GROUPID
+    version = POM_VERSION
 
     ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
@@ -37,6 +37,13 @@ allprojects {
         repositories {
             mavenDeployer {
                 beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+                repository(url:"https://oss.sonatype.org/service/local/staging/deploy/maven2/"){
+                    authentication(userName: "qbcbyb", password: "627566")
+                }
+                snapshotRepository(url:"https://oss.sonatype.org/content/repositories/snapshots/"){
+                    authentication(userName: "qbcbyb", password: "627566")
+                }
+
 //                repository(url: "http://localhost:8081/nexus/content/repositories/releases") {
 //                    authentication(userName: "deployment", password: "deployment123")
 //                }

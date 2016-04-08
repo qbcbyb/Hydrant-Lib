@@ -2,6 +2,7 @@ package cn.qbcbyb.lib;
 
 import android.content.DialogInterface;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import cn.qbcbyb.library.activity.BaseActivity;
+import cn.qbcbyb.library.util.DebugUtil;
 import cn.qbcbyb.library.util.Msg;
 import cn.qbcbyb.library.view.ProgressDialogCustom;
 
@@ -40,7 +42,17 @@ public class WebViewActivity extends BaseActivity {
         webView.getSettings().setBuiltInZoomControls(true);//设置使支持缩放
         webView.addJavascriptInterface(new JavaCallback(), "BCWebContainer");
 
-        loadUrl("http://115.28.110.211:3001/test/redirect/joinOrg");
+        final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        DebugUtil.d(TAG, "density:"+displayMetrics.density
+                + ",densityDpi:" + displayMetrics.densityDpi
+                + ",scaledDensity:" + displayMetrics.scaledDensity
+                + ",xdpi:" + displayMetrics.xdpi
+                + ",ydpi:" + displayMetrics.ydpi
+        );
+
+        loadUrl("http://z.cn");
+//        loadUrl("http://101.201.209.163/widget_basemap/index2.html");
+//        loadUrl("http://115.28.110.211:3001/test/redirect/joinOrg");
     }
 
     @Override
@@ -66,11 +78,26 @@ public class WebViewActivity extends BaseActivity {
         webView.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl);
     }
 
-    private static class MyWebViewClient extends WebViewClient {
+    private class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
+        }
+
+        @Override
+        public void onPageFinished(final WebView view, String url) {
+            super.onPageFinished(view, url);
+//            if (url != null && url.startsWith("http")) {
+//                final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                if (location == null) {
+//                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//                }
+//                if (location != null) {
+//                    view.loadUrl(String.format(Locale.getDefault(), "javascript:location1(%.6f,%.6f);", location.getLongitude(), location.getLatitude()));
+//                }
+//            }
         }
     }
 

@@ -32,7 +32,7 @@ public class Msg {
         NEUTRAL(DialogInterface.BUTTON_NEUTRAL);
         final int value;
 
-        private Which(int value) {
+        Which(int value) {
             this.value = value;
         }
 
