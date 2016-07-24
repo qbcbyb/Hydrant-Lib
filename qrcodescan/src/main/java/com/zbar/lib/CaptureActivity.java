@@ -70,12 +70,12 @@ public class CaptureActivity extends Activity implements CaptureContainer.Captur
         if (TextUtils.isEmpty(result)) {
             Toast.makeText(CaptureActivity.this, "Scan failed!", Toast.LENGTH_SHORT).show();
         } else {
-//			System.out.println("Result:"+resultString);
             Intent resultIntent = new Intent();
             Bundle bundle = new Bundle();
             bundle.putString(RESULT_DATA_KEY, result);
             resultIntent.putExtras(bundle);
             this.setResult(RESULT_OK, resultIntent);
+            finish();
         }
         return false;
     }

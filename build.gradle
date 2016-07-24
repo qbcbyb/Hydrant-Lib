@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0-alpha4'
+        classpath 'com.android.tools.build:gradle:2.1.2'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -38,10 +38,10 @@ allprojects {
             mavenDeployer {
                 beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
                 repository(url:"https://oss.sonatype.org/service/local/staging/deploy/maven2/"){
-                    authentication(userName: "qbcbyb", password: "627566")
+                    authentication(userName: OSS_USERID, password: OSS_PASSWORD)
                 }
                 snapshotRepository(url:"https://oss.sonatype.org/content/repositories/snapshots/"){
-                    authentication(userName: "qbcbyb", password: "627566")
+                    authentication(userName: OSS_USERID, password: OSS_PASSWORD)
                 }
 
 //                repository(url: "http://localhost:8081/nexus/content/repositories/releases") {

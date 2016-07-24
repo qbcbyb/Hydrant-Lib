@@ -11,10 +11,13 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/jazzylist/jazzylist.iml" filepath="$PROJECT_DIR$/jazzylist/jazzylist.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/provider/provider.iml" filepath="$PROJECT_DIR$/provider/provider.iml" />
       <module fileurl="file://$PROJECT_DIR$/qrcodescan/qrcodescan.iml" filepath="$PROJECT_DIR$/qrcodescan/qrcodescan.iml" />
       <module fileurl="file://$PROJECT_DIR$/requestloader/requestloader.iml" filepath="$PROJECT_DIR$/requestloader/requestloader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shareplugin/shareplugin.iml" filepath="$PROJECT_DIR$/shareplugin/shareplugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/tecentweibo/tecentweibo.iml" filepath="$PROJECT_DIR$/tecentweibo/tecentweibo.iml" />
       <module fileurl="file://$PROJECT_DIR$/viewlibrary/viewlibrary.iml" filepath="$PROJECT_DIR$/viewlibrary/viewlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/viewlibrarysample/viewlibrarysample.iml" filepath="$PROJECT_DIR$/viewlibrarysample/viewlibrarysample.iml" />
     </modules>
   </component>
 </project>

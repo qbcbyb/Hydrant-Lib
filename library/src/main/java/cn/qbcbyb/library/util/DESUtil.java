@@ -1,8 +1,6 @@
 package cn.qbcbyb.library.util;
 
 
-import com.tencent.weibo.sdk.android.component.sso.tools.Base64;
-
 import java.io.IOException;
 import java.security.SecureRandom;
 
@@ -25,7 +23,7 @@ public class DESUtil {
      */
     public static String encrypt(String data, String key) throws Exception {
         byte[] bt = encrypt(data.getBytes(), key.getBytes());
-        String strs = Base64.encode(bt);
+        String strs = TencentWeiboBase64.encode(bt);
         return strs;
     }
 
@@ -42,7 +40,7 @@ public class DESUtil {
             Exception {
         if (data == null)
             return null;
-        byte[] buf = Base64.decode(data);
+        byte[] buf = TencentWeiboBase64.decode(data);
         byte[] bt = decrypt(buf, key.getBytes());
         return new String(bt);
     }

@@ -62,6 +62,7 @@ public final class CaptureHandler extends Handler {
         removeMessages(R.id.decode_failed);
         removeMessages(R.id.decode);
         removeMessages(R.id.auto_focus);
+        decodeThread.destory();
     }
 
     private void restartPreviewAndDecode() {
@@ -72,5 +73,4 @@ public final class CaptureHandler extends Handler {
             CameraManager.get().requestAutoFocus(this, R.id.auto_focus);
         }
     }
-
 }

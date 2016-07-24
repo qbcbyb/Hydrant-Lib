@@ -51,8 +51,6 @@ public class WebViewActivity extends BaseActivity {
         );
 
         loadUrl("http://z.cn");
-//        loadUrl("http://101.201.209.163/widget_basemap/index2.html");
-//        loadUrl("http://115.28.110.211:3001/test/redirect/joinOrg");
     }
 
     @Override

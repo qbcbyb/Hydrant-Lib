@@ -21,19 +21,25 @@ public class SharedPreferencesManager {
     }
 
     private static SharedPreferences getPreference() {
-        synchronized (preferenceLock) {
-            if (preference == null) {
-                if (context == null) {
-                    throw new NullPointerException("context must not be null,call initContext first!");
+        if (preference == null) {
+            synchronized (preferenceLock) {
+                if (preference == null) {
+                    if (context == null) {
+                        throw new NullPointerException("context must not be null,call initContext first!");
+                    }
+                    preference = context.getApplicationContext()
+                            .getSharedPreferences(CONFIG_FILE, Context.MODE_PRIVATE);
                 }
-                preference = context.getApplicationContext()
-                        .getSharedPreferences(CONFIG_FILE, Context.MODE_PRIVATE);
             }
-            return preference;
         }
+        return preference;
     }
 
     public static final String CONFIG_FILE = "CONFIG_FILE";
+
+    public static boolean contains(String key) {
+        return getPreference().contains(key);
+    }
 
     @SuppressWarnings("unchecked")
     public static <T> T getValue(String key, T defaultValue) {

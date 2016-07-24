@@ -2,40 +2,48 @@ package cn.qbcbyb.library.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class ModelPagerAdapter<T> extends PagerAdapter {
 
     protected Context context;
 
     protected List<T> mDataList;
-    protected SparseArray<View> mViewList;
+    protected Map<T, WeakReference<View>> mViewList;
 
     public ModelPagerAdapter(Context context, List<T> mDataList) {
         this.context = context;
         this.mDataList = mDataList;
-        mViewList = new SparseArray<View>();
+        mViewList = new HashMap<>();
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);// 删除页卡
+        final T t = ((T) object);
+        final View view;
+        if (mViewList.containsKey(t) && (view = mViewList.get(t).get()) != null) {
+            container.removeView(view);// 删除页卡
+        }
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        // 这个方法用来实例化页卡
-        View view = mViewList.get(position);
-        if (mViewList.get(position) == null) {
-            view = createNewView(mDataList.get(position), position);
-            mViewList.put(position, view);
+        final T t = mDataList.get(position);
+        final View view;
+        if (!mViewList.containsKey(t) || mViewList.get(t).get() == null) {
+            view = createNewView(t, position);
+            mViewList.put(t, new WeakReference<>(view));
+        } else {
+            view = mViewList.get(t).get();
         }
         container.addView(view, 0);// 添加页卡
-        return view;
+        return t;
     }
 
     public List<T> getData() {
@@ -61,16 +69,12 @@ public abstract class ModelPagerAdapter<T> extends PagerAdapter {
         } else {
             mDataList = data;
         }
-
     }
 
     @Override
     public int getItemPosition(Object object) {
-        if (mViewList != null) {
-            View view = (View) object;
-            return mViewList.keyAt(mViewList.indexOfValue(view));
-        }
-        return -1;
+        final T t = (T) object;
+        return mDataList != null && mDataList.contains(t) ? mDataList.indexOf(t) : POSITION_NONE;
     }
 
     @Override
@@ -78,16 +82,16 @@ public abstract class ModelPagerAdapter<T> extends PagerAdapter {
         return this.mDataList == null ? 0 : this.mDataList.size();
     }
 
-    public View getItem(int position) {
-        if (mViewList != null && mViewList.indexOfKey(position) > -1) {
-            return mViewList.get(position);
+    public T getItem(int position) {
+        if (mDataList != null && mDataList.size() > position) {
+            return mDataList.get(position);
         }
         return null;
     }
 
     @Override
     public boolean isViewFromObject(View view, Object obj) {
-        return view == obj;
+        return view == mViewList.get((T) obj).get();
     }
 
     protected abstract View createNewView(T data, int position);

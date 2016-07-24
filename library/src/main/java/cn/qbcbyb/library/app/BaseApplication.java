@@ -12,7 +12,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -36,7 +36,7 @@ import cn.qbcbyb.library.util.StringUtils;
 
 public class BaseApplication extends Application implements Thread.UncaughtExceptionHandler {
 
-    public static final DisplayImageOptions.Builder getDefaultDisplayImageOptionsBuilder() {
+    public static DisplayImageOptions.Builder getDefaultDisplayImageOptionsBuilder() {
         return new DisplayImageOptions.Builder()
                 .showImageOnLoading(BaseApplication.getInstance(BaseApplication.class).getDefaultLoadingRes())
                 .showImageForEmptyUri(BaseApplication.getInstance(BaseApplication.class).getDefaultLoadingRes())
@@ -115,7 +115,7 @@ public class BaseApplication extends Application implements Thread.UncaughtExcep
     protected void setImageLoaderConfiguration(ImageLoaderConfiguration.Builder builder) {
         DisplayImageOptions displayImageOptions = getDefaultDisplayImageOptionsBuilder().build();
         builder.memoryCacheSize((int) Runtime.getRuntime().maxMemory() / 8)
-                .diskCache(new UnlimitedDiscCache(getAppImagePath()))
+                .diskCache(new UnlimitedDiskCache(getAppImagePath()))
 //                .diskCacheSize(100 * 1024 * 1024)
 //                .diskCacheFileCount(300)
                 .defaultDisplayImageOptions(displayImageOptions);

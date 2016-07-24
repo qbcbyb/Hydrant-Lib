@@ -75,7 +75,7 @@ public class CaptureContainer implements SurfaceHolder.Callback {
 
         if (container.onCaptureAndCheckNeedRestart(result)) {
             // 连续扫描，不发送此消息扫描一次结束后就不能再次扫描
-            handler.sendEmptyMessage(R.id.restart_preview);
+            getHandler().sendEmptyMessage(R.id.restart_preview);
         }
     }
 

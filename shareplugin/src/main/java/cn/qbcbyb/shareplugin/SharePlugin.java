@@ -1,4 +1,4 @@
-package cn.qbcbyb.library.app;
+package cn.qbcbyb.shareplugin;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,8 +32,6 @@ import com.tencent.weibo.sdk.android.component.sso.WeiboToken;
 import com.tencent.weibo.sdk.android.model.AccountModel;
 
 import java.text.MessageFormat;
-
-import cn.qbcbyb.library.R;
 
 /**
  * Created by 秋云 on 2014/9/16.
@@ -92,7 +90,7 @@ public class SharePlugin {
     private SharePlugin() {
     }
 
-    public void sendWeixinLoginRequest() {
+    public void sendWeixinLoginRequest(Context context) {
         if (mWeixinShareAPI == null) {
             throw new IllegalArgumentException("WXAPI is null");
         }
@@ -101,7 +99,7 @@ public class SharePlugin {
         }
         final SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
-        req.state = BaseApplication.getInstance(BaseApplication.class).getPackageName();
+        req.state = context.getApplicationContext().getPackageName();
         mWeixinShareAPI.sendReq(req);
     }
 

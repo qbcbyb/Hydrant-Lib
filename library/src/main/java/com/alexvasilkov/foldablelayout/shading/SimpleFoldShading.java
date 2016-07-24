@@ -1,21 +1,25 @@
 package com.alexvasilkov.foldablelayout.shading;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Shader;
 import android.view.Gravity;
 
 public class SimpleFoldShading implements FoldShading {
 
-    private static final int SHADOW_COLOR = Color.BLACK;
+    private static final int SHADOW_START_COLOR = 0xFF000000;
+    private static final int SHADOW_END_COLOR = 0x00000000;
+    //    private static final int SHADOW_COLOR = Color.BLACK;
     private static final int SHADOW_MAX_ALPHA = 192;
 
     private final Paint mSolidShadow;
 
     public SimpleFoldShading() {
         mSolidShadow = new Paint();
-        mSolidShadow.setColor(SHADOW_COLOR);
+        mSolidShadow.setShader(new LinearGradient(0, 0, 0, 100, SHADOW_START_COLOR, SHADOW_END_COLOR, Shader.TileMode.CLAMP));
+//        mSolidShadow.setColor(SHADOW_COLOR);
     }
 
     @Override

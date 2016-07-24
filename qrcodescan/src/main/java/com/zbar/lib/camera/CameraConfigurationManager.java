@@ -69,11 +69,11 @@ final class CameraConfigurationManager {
             parameters.set("rotation", 90); // 镜头角度转90度（默认摄像头是横拍）
             camera.setDisplayOrientation(90); // 在2.2以上可以使用
         } else if (rotation == Surface.ROTATION_270) {
-            parameters.set("rotation", 180); // 镜头角度转90度（默认摄像头是横拍）
-            camera.setDisplayOrientation(180); // 在2.2以上可以使用
+            parameters.set("rotation", 180); 
+            camera.setDisplayOrientation(180); 
         } else if (rotation == Surface.ROTATION_180) {
-            parameters.set("rotation", 270); // 镜头角度转90度（默认摄像头是横拍）
-            camera.setDisplayOrientation(270); // 在2.2以上可以使用
+            parameters.set("rotation", 270); 
+            camera.setDisplayOrientation(270); 
         } else {// 如果是横屏
 //            parameters.set("orientation", "landscape"); //
             parameters.set("rotation", 0);

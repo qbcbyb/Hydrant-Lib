@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.github.qbcbyb.viewlibrarysample.MainActivity">
+
+    <Button
+        android:id="@+id/btnNormalPager"
+        style="@style/button_in_main"
+        android:text="Normal Pager" />
+
+    <Button
+        android:id="@+id/btnPager"
+        style="@style/button_in_main"
+        android:text="Pager" />
+
+    <Button
+        android:id="@+id/btnDeck"
+        style="@style/button_in_main"
+        android:text="Deck" />
+
+    <Button
+        android:id="@+id/btnResize"
+        style="@style/button_in_main"
+        android:text="Resize" />
+</LinearLayout>
