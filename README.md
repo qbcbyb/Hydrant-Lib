@@ -1,6 +1,8 @@
 # Hydrant-Lib
 Hydrant's Android Library
 
+ViewLibrary(RecyclerView's LayoutManager) is available on <https://github.com/qbcbyb/Hydrant-Lib/tree/master/viewlibrary>
+
 library
     
     main library
