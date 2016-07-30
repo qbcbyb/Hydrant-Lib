@@ -11,7 +11,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -20,7 +19,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by qbcby on 2016/4/19.
@@ -47,6 +45,10 @@ public abstract class ContentProvider extends android.content.ContentProvider {
     @NonNull
     @Override
     public ContentProviderResult[] applyBatch(@NonNull ArrayList<ContentProviderOperation> operations) {
+        final Context context = getContext();
+        if (context == null) {
+            throw new NullPointerException("context must not be null!");
+        }
         SQLiteDatabase db = sqliteOpenHelper.getWritableDatabase();
         db.beginTransaction();
         try {
@@ -64,7 +66,7 @@ public abstract class ContentProvider extends android.content.ContentProvider {
                 i++;
             }
             db.setTransactionSuccessful();
-            final ContentResolver contentResolver = getContext().getContentResolver();
+            final ContentResolver contentResolver = context.getContentResolver();
             for (ContentProviderOperation operation : operations) {
                 contentResolver.notifyChange(operation.getUri(), null);
             }
@@ -79,7 +81,11 @@ public abstract class ContentProvider extends android.content.ContentProvider {
 
     @Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
-        QueryParams queryParams = getQueryParams(uri);
+        final Context context = getContext();
+        if (context == null) {
+            throw new NullPointerException("context must not be null!");
+        }
+        QueryParams queryParams = ContentProviderUtil.getQueryParams(uri);
         SQLiteDatabase db = sqliteOpenHelper.getWritableDatabase();
         int res = 0;
         db.beginTransaction();
@@ -96,7 +102,7 @@ public abstract class ContentProvider extends android.content.ContentProvider {
             db.endTransaction();
         }
         if (res != 0 && queryParams.needNotify) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            context.getContentResolver().notifyChange(uri, null);
         }
         if (DEBUG) {
             Log.d("CP-bulkInsert:" + res, queryParams.toString());
@@ -106,11 +112,15 @@ public abstract class ContentProvider extends android.content.ContentProvider {
 
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
-        QueryParams queryParams = getQueryParams(uri);
+        final Context context = getContext();
+        if (context == null) {
+            throw new NullPointerException("context must not be null!");
+        }
+        QueryParams queryParams = ContentProviderUtil.getQueryParams(uri);
         long rowId = sqliteOpenHelper.getWritableDatabase().insertOrThrow(queryParams.tableName, null, values);
         if (rowId == -1L) return null;
         if (queryParams.needNotify) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            context.getContentResolver().notifyChange(uri, null);
         }
         if (DEBUG) {
             Log.d("CP-insert:" + rowId, queryParams.toString());
@@ -120,10 +130,14 @@ public abstract class ContentProvider extends android.content.ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        QueryParams queryParams = getQueryParams(uri, selection, selectionArgs);
+        final Context context = getContext();
+        if (context == null) {
+            throw new NullPointerException("context must not be null!");
+        }
+        QueryParams queryParams = ContentProviderUtil.getQueryParams(uri, selection, selectionArgs);
         int res = sqliteOpenHelper.getWritableDatabase().update(queryParams.tableName, values, queryParams.selection, selectionArgs);
         if (res != 0 && queryParams.needNotify) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            context.getContentResolver().notifyChange(uri, null);
         }
         if (DEBUG) {
             Log.d("CP-update:" + res, queryParams.toString());
@@ -133,7 +147,11 @@ public abstract class ContentProvider extends android.content.ContentProvider {
 
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        QueryParams queryParams = getQueryParams(uri, selection, sortOrder, projection, selectionArgs);
+        final Context context = getContext();
+        if (context == null) {
+            throw new NullPointerException("context must not be null!");
+        }
+        QueryParams queryParams = ContentProviderUtil.getQueryParams(uri, selection, sortOrder, projection, selectionArgs);
         final UnionQueryParams[] unionAll = queryParams.unionAll;//UnionQueryParams[]
         Cursor res;
         if (unionAll == null || unionAll.length == 0) {
@@ -165,7 +183,7 @@ public abstract class ContentProvider extends android.content.ContentProvider {
                     TextUtils.join(" UNION ALL ", whereList),
                     argsList.toArray(new String[argsList.size()]));
         }
-        res.setNotificationUri(getContext().getContentResolver(), uri);
+        res.setNotificationUri(context.getContentResolver(), uri);
         if (DEBUG) {
             Log.d("CP-query:${res.count}", queryParams.toString());
         }
@@ -174,62 +192,18 @@ public abstract class ContentProvider extends android.content.ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
-        QueryParams queryParams = getQueryParams(uri, selection, selectionArgs);
+        final Context context = getContext();
+        if (context == null) {
+            throw new NullPointerException("context must not be null!");
+        }
+        QueryParams queryParams = ContentProviderUtil.getQueryParams(uri, selection, selectionArgs);
         int res = sqliteOpenHelper.getWritableDatabase().delete(queryParams.tableName, queryParams.selection, selectionArgs);
         if (res != 0 && queryParams.needNotify) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            context.getContentResolver().notifyChange(uri, null);
         }
         if (DEBUG) {
             Log.d("CP-delete:" + res, queryParams.toString());
         }
         return res;
-    }
-
-    private QueryParams getQueryParams(Uri uri) {
-        return getQueryParams(uri, null, null, null, null);
-    }
-
-    private QueryParams getQueryParams(Uri uri, String selection, String[] selectionArgs) {
-        return getQueryParams(uri, selection, null, null, selectionArgs);
-    }
-
-    private QueryParams getQueryParams(Uri uri, String selection, String orderBy, String[] projection, String[] selectionArgs) {
-        SQLiteTable.TableNameAndDir tableNameDir = SQLiteTable.getTableNameDir(uri);
-        if (tableNameDir == null) {
-            throw new IllegalArgumentException(String.format("The uri '%1$s' is not supported by this ContentProvider", uri));
-        }
-        String tableName = tableNameDir.tableName;
-        String where;
-        String having = uri.getQueryParameter(ContentProviderUtil.QUERYPARAM_HAVING);
-        String limit = uri.getQueryParameter(ContentProviderUtil.QUERYPARAM_LIMIT);
-        String groupBy = uri.getQueryParameter(ContentProviderUtil.QUERYPARAM_GROUPBY);
-        List<String> unionAllStr = uri.getQueryParameters(ContentProviderUtil.QUERYPARAM_UNIONALL);
-        UnionQueryParams[] unionAll = UnionQueryParams.listToArray(unionAllStr);
-        final String needNotifyParam = uri.getQueryParameter(ContentProviderUtil.QUERYPARAM_NEEDNOTIFY);
-        boolean needNotify = needNotifyParam == null || Boolean.parseBoolean(needNotifyParam);
-        List<String> joins = uri.getQueryParameters(ContentProviderUtil.QUERYPARAM_JOIN);
-        if (joins != null && joins.size() > 0) {
-            for (String join : joins) {
-                if (join != null && join.length() > 0) {
-                    Uri joinUri = Uri.parse(join);
-                    SQLiteTable.TableNameAndDir joinTable = SQLiteTable.getTableNameDir(joinUri);
-                    if (joinTable == null) {
-                        throw new IllegalArgumentException(String.format("The join uri '%1$s' is not supported by this ContentProvider", joinUri));
-                    }
-                    String joinType = ContentProviderUtil.JoinType.valueOf(joinUri.getQueryParameter(ContentProviderUtil.QUERYPARAM_JOINTYPE)).joinString;
-                    String leftColumn = joinUri.getQueryParameter(ContentProviderUtil.QUERYPARAM_JOINLEFTCOLUMN);
-                    String rightColumn = joinUri.getQueryParameter(ContentProviderUtil.QUERYPARAM_JOINRIGHTCOLUMN);
-                    tableName += String.format(" %2$s %3$s ON %1$s.%4$s = %3$s.%5$s ",
-                            tableNameDir.tableName, joinType, joinTable.tableName, leftColumn, rightColumn);
-                }
-            }
-        }
-        if (tableNameDir.isDir) {
-            where = selection;
-        } else {
-            String idSelection = String.format("%s = %s ", BaseColumns._ID, uri.getLastPathSegment());
-            where = TextUtils.isEmpty(selection) ? idSelection : String.format(" %s and %s", idSelection, selection);
-        }
-        return new QueryParams(tableName, where, orderBy, having, groupBy, limit, projection, selectionArgs, unionAll, needNotify);
     }
 }

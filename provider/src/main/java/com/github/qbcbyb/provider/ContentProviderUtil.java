@@ -2,6 +2,10 @@ package com.github.qbcbyb.provider;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.provider.BaseColumns;
+import android.text.TextUtils;
+
+import java.util.List;
 
 /**
  * Created by qbcby on 2016/4/20.
@@ -88,5 +92,53 @@ public class ContentProviderUtil {
                 .appendQueryParameter(QUERYPARAM_JOINLEFTCOLUMN, leftColumn)
                 .appendQueryParameter(QUERYPARAM_JOINRIGHTCOLUMN, rightColumn).build().toString();
         return leftUri.buildUpon().appendQueryParameter(QUERYPARAM_JOIN, joinStr).build();
+    }
+
+    static QueryParams getQueryParams(Uri uri) {
+        return getQueryParams(uri, null, null, null, null);
+    }
+
+    static QueryParams getQueryParams(Uri uri, String selection, String[] selectionArgs) {
+        return getQueryParams(uri, selection, null, null, selectionArgs);
+    }
+
+    static QueryParams getQueryParams(Uri uri, String selection, String orderBy, String[] projection, String[] selectionArgs) {
+        SQLiteTable.TableNameAndDir tableNameDir = SQLiteTable.getTableNameDir(uri);
+        if (tableNameDir == null) {
+            throw new IllegalArgumentException(String.format("The uri '%1$s' is not supported by this ContentProvider", uri));
+        }
+        String tableName = tableNameDir.tableName;
+        String where;
+        String having = uri.getQueryParameter(ContentProviderUtil.QUERYPARAM_HAVING);
+        String limit = uri.getQueryParameter(ContentProviderUtil.QUERYPARAM_LIMIT);
+        String groupBy = uri.getQueryParameter(ContentProviderUtil.QUERYPARAM_GROUPBY);
+        List<String> unionAllStr = uri.getQueryParameters(ContentProviderUtil.QUERYPARAM_UNIONALL);
+        UnionQueryParams[] unionAll = UnionQueryParams.listToArray(unionAllStr);
+        final String needNotifyParam = uri.getQueryParameter(ContentProviderUtil.QUERYPARAM_NEEDNOTIFY);
+        boolean needNotify = needNotifyParam == null || Boolean.parseBoolean(needNotifyParam);
+        List<String> joins = uri.getQueryParameters(ContentProviderUtil.QUERYPARAM_JOIN);
+        if (joins != null && joins.size() > 0) {
+            for (String join : joins) {
+                if (join != null && join.length() > 0) {
+                    Uri joinUri = Uri.parse(join);
+                    SQLiteTable.TableNameAndDir joinTable = SQLiteTable.getTableNameDir(joinUri);
+                    if (joinTable == null) {
+                        throw new IllegalArgumentException(String.format("The join uri '%1$s' is not supported by this ContentProvider", joinUri));
+                    }
+                    String joinType = ContentProviderUtil.JoinType.valueOf(joinUri.getQueryParameter(ContentProviderUtil.QUERYPARAM_JOINTYPE)).joinString;
+                    String leftColumn = joinUri.getQueryParameter(ContentProviderUtil.QUERYPARAM_JOINLEFTCOLUMN);
+                    String rightColumn = joinUri.getQueryParameter(ContentProviderUtil.QUERYPARAM_JOINRIGHTCOLUMN);
+                    tableName += String.format(" %2$s %3$s ON %1$s.%4$s = %3$s.%5$s ",
+                            tableNameDir.tableName, joinType, joinTable.tableName, leftColumn, rightColumn);
+                }
+            }
+        }
+        if (tableNameDir.isDir) {
+            where = selection;
+        } else {
+            String idSelection = String.format("%s = %s ", BaseColumns._ID, uri.getLastPathSegment());
+            where = TextUtils.isEmpty(selection) ? idSelection : String.format(" %s and %s", idSelection, selection);
+        }
+        return new QueryParams(tableName, where, orderBy, having, groupBy, limit, projection, selectionArgs, unionAll, needNotify);
     }
 }

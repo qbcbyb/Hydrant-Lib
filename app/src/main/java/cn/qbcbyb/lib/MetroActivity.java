@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.origamilabs.library.views.StaggeredGridView;
-import com.zbar.lib.CaptureActivity;
 
 import java.util.List;
 
@@ -99,7 +98,7 @@ public class MetroActivity extends CustomViewActionBarActivity implements Stagge
 
     @Override
     public void onItemClick(StaggeredGridView parent, View view, int position, long id) {
-        startActivity(new Intent(this, CaptureActivity.class));
+        startActivity(new Intent(this, QrActivity.class));
     }
 
     public enum QueryType {

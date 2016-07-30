@@ -166,6 +166,10 @@ public class CaptureContainer implements SurfaceHolder.Callback {
     }
 
     public void destory() {
+        pause();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+        }
         inactivityTimer.shutdown();
     }
 
@@ -215,21 +219,24 @@ public class CaptureContainer implements SurfaceHolder.Callback {
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         hasSurface = false;
-
     }
 
     private void initBeepSound() {
-        if (playBeep && mediaPlayer == null) {
-            container.getActivity().setVolumeControlStream(AudioManager.STREAM_MUSIC);
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaPlayer.setOnCompletionListener(beepListener);
+        if (playBeep) {
+            if (mediaPlayer == null) {
+                container.getActivity().setVolumeControlStream(AudioManager.STREAM_MUSIC);
+                mediaPlayer = new MediaPlayer();
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
+            } else {
+                mediaPlayer.reset();
+                mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
+            }
 
             AssetFileDescriptor file = container.getActivity().getResources().openRawResourceFd(R.raw.beep);
             try {
                 mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
                 file.close();
-                mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
                 mediaPlayer.prepare();
             } catch (IOException e) {
                 mediaPlayer = null;
@@ -252,12 +259,6 @@ public class CaptureContainer implements SurfaceHolder.Callback {
             vibrator.vibrate(VIBRATE_DURATION);
         }
     }
-
-    private final MediaPlayer.OnCompletionListener beepListener = new MediaPlayer.OnCompletionListener() {
-        public void onCompletion(MediaPlayer mediaPlayer) {
-            mediaPlayer.seekTo(0);
-        }
-    };
 
     public interface CaptureContainerCanFinish extends FinishListener.OnFinishListener {
         View findById(int id);

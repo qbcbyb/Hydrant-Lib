@@ -1,0 +1,39 @@
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import android.content.ContentValues;
+import android.database.Cursor;
+
+import com.github.qbcbyb.provider.TableModel;
+
+#parse("File Header.java")
+public class ${NAME} implements TableModel<${NAME}, ${NAME}TableColumn> {
+    private final DefaultImpls<${NAME}, ${NAME}TableColumn> defaultImpls = new DefaultImpls<>(this);
+
+    public Long get_id() {
+        return defaultImpls.get_id();
+    }
+
+    public void set_id(Long _id) {
+        defaultImpls.set_id(_id);
+    }
+
+    @Override
+    public void fromCursor(Cursor cursor) {
+        defaultImpls.fromCursor(cursor);
+    }
+
+    @Override
+    public ContentValues toContentValues() {
+        return defaultImpls.toContentValues();
+    }
+
+    @Override
+    public ContentValues toContentValues(${NAME}TableColumn[] tableColumns) {
+        return defaultImpls.toContentValues(tableColumns);
+    }
+
+    @Override
+    public ${NAME}TableColumn[] defaultTableColumnArr() {
+        return ${NAME}TableColumn.values();
+    }
+}

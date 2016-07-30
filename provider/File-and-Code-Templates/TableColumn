@@ -1,0 +1,84 @@
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import android.content.ContentValues;
+import android.database.Cursor;
+
+import com.github.qbcbyb.provider.TableColumn;
+
+import java.util.Arrays;
+import java.util.List;
+
+#parse("File Header.java")
+public enum ${NAME}TableColumn implements TableColumn<${NAME}> {
+    _id("INTEGER PRIMARY KEY AUTOINCREMENT") {
+        @Override
+        public void readCursorValue(${NAME} bean, Cursor cursor, int index) {
+            bean.set_id(cursor.getLong(index));
+        }
+    }
+    ;
+
+    private DefaultImpls<${NAME}> impls;
+
+    ${NAME}TableColumn(String fieldType) {
+        this.impls = new DefaultImpls<>(this, fieldType);
+    }
+
+    @Override
+    public String getFieldName() {
+        return name();
+    }
+
+    @Override
+    public String getFieldType() {
+        return impls.getFieldType();
+    }
+
+    @Override
+    public int getFieldIndex(Cursor cursor) {
+        return impls.getFieldIndex(cursor);
+    }
+
+    @Override
+    public void fromCursor(${NAME} bean, Cursor cursor) {
+        impls.fromCursor(bean, cursor);
+    }
+
+    @Override
+    public void toContentValues(${NAME} bean, ContentValues
+            contentValues) {
+        impls.toContentValues(bean, contentValues);
+    }
+
+    @Override
+    public DefaultImpls<${NAME}> getDefaultImpls() {
+        return impls;
+    }
+
+    @Override
+    public void readCursorValue(${NAME} bean, Cursor cursor, int index) {
+    }
+
+    @Override
+    public Object getFieldValue(${NAME} bean) {
+        return null;
+    }
+
+    private static String[] columnNameArr;
+
+    public static String[] columnNames() {
+        if (columnNameArr == null) {
+            synchronized (${NAME}TableColumn.class) {
+                if (columnNameArr == null) {
+                    final ${NAME}TableColumn[] values = values();
+                    final int length = values.length;
+                    columnNameArr = new String[length];
+                    for (int i = 0; i < length; i++) {
+                        columnNameArr[i] = values[i].getFieldName();
+                    }
+                }
+            }
+        }
+        return columnNameArr;
+    }
+}
