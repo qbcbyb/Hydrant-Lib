@@ -1,34 +1,19 @@
-# Hydrant-Lib
-Hydrant's Android Library
-
 ## ViewLibrary(RecyclerView's LayoutManager) is available on <https://github.com/qbcbyb/Hydrant-Lib/tree/master/viewlibrary>
 
 view sample in ViewLibrarySample<https://github.com/qbcbyb/Hydrant-Lib/tree/master/viewlibrarysample>
 or videos below:
 
 ### Normal-Pager
-<video id="video" controls="" preload="none">
-  <source id="mp4" src="./videos/viewlibrarysample-normal-pager.mp4" type="video/mp4">
-  <p>Your user agent does not support the HTML5 Video element.</p>
-</video>
+![normal-pager](videos/normal-pager.gif)
 
 ### Pager
-<video id="video" controls="" preload="none">
-  <source id="mp4" src="./videos/viewlibrarysample-pager.mp4" type="video/mp4">
-  <p>Your user agent does not support the HTML5 Video element.</p>
-</video>
+![normal-pager](videos/pager.gif)
 
 ### Deck
-<video id="video" controls="" preload="none">
-  <source id="mp4" src="./videos/viewlibrarysample-deck.mp4" type="video/mp4">
-  <p>Your user agent does not support the HTML5 Video element.</p>
-</video>
+![normal-pager](videos/deck.gif)
 
 ### Resize
-<video id="video" controls="" preload="none">
-  <source id="mp4" src="./videos/viewlibrarysample-resize.mp4" type="video/mp4">
-  <p>Your user agent does not support the HTML5 Video element.</p>
-</video>
+![normal-pager](videos/resize.gif)
 
 ### USAGE:
 Only snapshot version available on oss.snapshot.org now,
@@ -51,12 +36,12 @@ and then you can add below to your dependencies:
     then add below to your dependencies:
     >compile 'com.github.qbcbyb:provider:1.0.15-SNAPSHOT
 2. Download Templates in <https://github.com/qbcbyb/Hydrant-Lib/tree/master/provider/File-and-Code-Templates> ,then add them to your AndroidStudio's "File and Code Templates"
-3. Create bean use template TableModel and create tableColumn use template TableColumn, all of them mush use the same Name while creating;
+3. Create bean use template `TableModel` and create tableColumn use template `TableColumn`, all of them mush use the same Name while creating;
 4. Now you can add your field to your bean ,don't forget to implement field's getter and setter in your tableColumn, view `Conversation` and `ConversationTableColumn` sample in <https://github.com/qbcbyb/Hydrant-Lib/tree/master/provider/src/test/java/com/github/qbcbyb/provider/test>;
-5. Add your table single instance into Tables list like <https://github.com/qbcbyb/Hydrant-Lib/tree/master/provider/src/test/java/com/github/qbcbyb/provider/test/Tables.java>;
-6. Add your ContentProvider and SQLiteOpenHelper like TestContentProvider and TestSQLiteOpenHelper in <https://github.com/qbcbyb/Hydrant-Lib/tree/master/provider/src/test/java/com/github/qbcbyb/provider/test/>;
-7. Add TestContentProvider in your AndroidManifest.xml;
-8. Once you need add new Table, you need repeat step 3、4、5 , and config UpgradeAction in TestSQLiteOpenHelper.
+5. Add your table single instance into `Tables` list like <https://github.com/qbcbyb/Hydrant-Lib/tree/master/provider/src/test/java/com/github/qbcbyb/provider/test/Tables.java>;
+6. Add your ContentProvider and SQLiteOpenHelper like `TestContentProvider` and `TestSQLiteOpenHelper` in <https://github.com/qbcbyb/Hydrant-Lib/tree/master/provider/src/test/java/com/github/qbcbyb/provider/test/>;
+7. Add `TestContentProvider` in your AndroidManifest.xml;
+8. Once you need add new Table, you need repeat step 3、4、5 , and config UpgradeAction in `TestSQLiteOpenHelper`.
 
 ## library
     
@@ -85,21 +70,21 @@ and then you can add below to your dependencies:
       uk.co.senab.photoview (可放大缩小的图片查看库)
     
 
-ImageCrop
+## ImageCrop
     
     is a copy of "https://github.com/jdamcd/android-crop"
     using for image crop
 
-PullToRefresh
+## PullToRefresh
     
     is a copy of "https://github.com/chrisbanes/Android-PullToRefresh"
     add StaggeredGridView(瀑布流) from "https://github.com/maurycyw/StaggeredGridView"
     add PullToRefreshStaggeredGridView from opensource
 
-androidtimessquareidle_wulib
+## androidtimessquareidle_wulib
     
     日历展示库 已经忘了引用源是哪了~
 
-tecentweibo、QiNiu
+## tecentweibo、QiNiu
     
     引用组件库
