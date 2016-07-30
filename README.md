@@ -28,13 +28,13 @@ allprojects {
 }
 ```
 and then you can add below to your dependencies:
->compile 'com.github.qbcbyb:viewlibrary:1.0.15-SNAPSHOT
+> compile 'com.github.qbcbyb:viewlibrary:1.0.15-SNAPSHOT
 
 ## provider: a simple ContentProvider implement,<https://github.com/qbcbyb/Hydrant-Lib/tree/master/provider>
 ### USAGE:
 1. Please add <https://oss.sonatype.org/content/repositories/snapshots/> in your config like above
     then add below to your dependencies:
-    >compile 'com.github.qbcbyb:provider:1.0.15-SNAPSHOT
+> compile 'com.github.qbcbyb:provider:1.0.15-SNAPSHOT
 2. Download Templates in <https://github.com/qbcbyb/Hydrant-Lib/tree/master/provider/File-and-Code-Templates> ,then add them to your AndroidStudio's "File and Code Templates"
 3. Create bean use template `TableModel` and create tableColumn use template `TableColumn`, all of them mush use the same Name while creating;
 4. Now you can add your field to your bean ,don't forget to implement field's getter and setter in your tableColumn, view `Conversation` and `ConversationTableColumn` sample in <https://github.com/qbcbyb/Hydrant-Lib/tree/master/provider/src/test/java/com/github/qbcbyb/provider/test>;
@@ -43,7 +43,7 @@ and then you can add below to your dependencies:
 7. Add `TestContentProvider` in your AndroidManifest.xml;
 8. Once you need add new Table, you need repeat step 3、4、5 , and config UpgradeAction in `TestSQLiteOpenHelper`.
 
-## library
+## ~~library(do not recommand)~~
     
     main library
     
@@ -75,7 +75,7 @@ and then you can add below to your dependencies:
     is a copy of "https://github.com/jdamcd/android-crop"
     using for image crop
 
-## PullToRefresh
+## ~~PullToRefresh~~
     
     is a copy of "https://github.com/chrisbanes/Android-PullToRefresh"
     add StaggeredGridView(瀑布流) from "https://github.com/maurycyw/StaggeredGridView"
@@ -85,6 +85,6 @@ and then you can add below to your dependencies:
     
     日历展示库 已经忘了引用源是哪了~
 
-## tecentweibo、QiNiu
+## ~~tecentweibo、QiNiu~~
     
     引用组件库
