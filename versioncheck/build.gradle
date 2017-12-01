@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+
+version = '0.0.2-SNAPSHOT'
+
 android {
     compileSdkVersion Integer.parseInt(PROJECT_COMPILESDKVERSION)
     buildToolsVersion PROJECT_BUILDTOOLSVERSION
