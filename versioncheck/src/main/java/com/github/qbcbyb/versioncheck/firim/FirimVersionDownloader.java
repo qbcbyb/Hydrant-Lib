@@ -26,10 +26,13 @@ class FirimVersionDownloader implements IVersionDownloader {
         this.version = version;
     }
 
+    public String getDownloadFileName() {
+        return MessageFormat.format("{0}-{1}.apk", version.getName(), version.getVersionShort());
+    }
+
     @Override
     public void download(Context context, final IProgressControl progressControl, final DownloadCallback downloadCallback) {
-        final File dir_download = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                MessageFormat.format("{0}-{1}.apk", version.getName(), version.getVersionShort()));
+        final File dir_download = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), getDownloadFileName());
         asyncHttpClient.get(version.getInstallUrl(), new RangeFileAsyncHttpResponseHandler(dir_download) {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {

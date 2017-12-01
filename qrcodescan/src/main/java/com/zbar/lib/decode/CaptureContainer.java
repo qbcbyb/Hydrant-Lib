@@ -169,6 +169,7 @@ public class CaptureContainer implements SurfaceHolder.Callback {
         pause();
         if (mediaPlayer != null) {
             mediaPlayer.release();
+            mediaPlayer = null;
         }
         inactivityTimer.shutdown();
     }

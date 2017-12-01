@@ -37,7 +37,7 @@ public interface TableColumn<Bean> extends SQLiteOperateAction<Bean> {
 
         public void fromCursor(Bean bean, Cursor cursor) {
             int i = tableColumn.getFieldIndex(cursor);
-            if (cursor.isNull(i)) return;
+            if (i < 0 || cursor.isNull(i)) return;
             this.tableColumn.readCursorValue(bean, cursor, i);
         }
 
