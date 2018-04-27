@@ -12,6 +12,7 @@ import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 
 import com.github.qbcbyb.viewlibrary.recycler.SnappyRecyclerView;
+import com.github.qbcbyb.viewlibrary.recycler.adapter.LayoutBuilder;
 import com.github.qbcbyb.viewlibrary.recycler.adapter.SimpleRecyclerAdapter;
 import com.github.qbcbyb.viewlibrary.recycler.adapter.ViewHolder;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -31,7 +32,12 @@ public abstract class BaseRecyclerActivity extends BaseActivity {
     protected void doCreate() {
         recyclerView = new SnappyRecyclerView(this);
         setContentView(recyclerView);
-        SimpleRecyclerAdapter<String> adapter = new SimpleRecyclerAdapter<>(this, getItemLayoutId(), Holder.class);
+        SimpleRecyclerAdapter<String> adapter = new SimpleRecyclerAdapter<>(this, new LayoutBuilder<String, Holder>(getItemLayoutId()) {
+            @Override
+            public Holder newViewHolder(View itemView) {
+                return new Holder(itemView);
+            }
+        });
         adapter.changeData(Arrays.asList(Constants.getImageUrls()));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(generateLayoutManager());

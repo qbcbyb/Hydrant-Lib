@@ -19,9 +19,8 @@ import java.io.IOException;
  * 描述: 相机管理
  */
 public final class CameraManager {
-    private static CameraManager cameraManager;
-
     static final int SDK_INT;
+    private static CameraManager cameraManager;
 
     static {
         int sdkInt;
@@ -34,13 +33,21 @@ public final class CameraManager {
     }
 
     private final CameraConfigurationManager configManager;
-    private Camera camera;
-    private boolean initialized;
-    private boolean previewing;
     private final boolean useOneShotPreviewCallback;
     private final PreviewCallback previewCallback;
     private final AutoFocusCallback autoFocusCallback;
+    private Camera camera;
+    private boolean initialized;
+    private boolean previewing;
     private Parameters parameter;
+
+    private CameraManager(Context context) {
+        this.configManager = new CameraConfigurationManager(context);
+
+        useOneShotPreviewCallback = SDK_INT > 3;
+        previewCallback = new PreviewCallback(configManager, useOneShotPreviewCallback);
+        autoFocusCallback = new AutoFocusCallback();
+    }
 
     public static void init(Context context) {
         if (cameraManager == null) {
@@ -50,14 +57,6 @@ public final class CameraManager {
 
     public static CameraManager get() {
         return cameraManager;
-    }
-
-    private CameraManager(Context context) {
-        this.configManager = new CameraConfigurationManager(context);
-
-        useOneShotPreviewCallback = SDK_INT > 3;
-        previewCallback = new PreviewCallback(configManager, useOneShotPreviewCallback);
-        autoFocusCallback = new AutoFocusCallback();
     }
 
     public void openDriver(SurfaceHolder holder) throws IOException {
@@ -123,6 +122,27 @@ public final class CameraManager {
         if (camera != null && previewing) {
             autoFocusCallback.setHandler(handler, message);
             camera.autoFocus(autoFocusCallback);
+        }
+    }
+
+    public void takePhoto(Camera.ShutterCallback shutter, Camera.PictureCallback raw,
+                          Camera.PictureCallback jpeg) {
+        if (camera != null && previewing) {
+            camera.takePicture(shutter, raw, jpeg);
+        }
+    }
+
+    public void toggleLight() {
+        if (camera != null) {
+            parameter = camera.getParameters();
+            final String targetFlashMode;
+            if (!Parameters.FLASH_MODE_OFF.equals(parameter.getFlashMode())) {
+                targetFlashMode = Parameters.FLASH_MODE_OFF;
+            } else {
+                targetFlashMode = Parameters.FLASH_MODE_TORCH;
+            }
+            parameter.setFlashMode(targetFlashMode);
+            camera.setParameters(parameter);
         }
     }
 

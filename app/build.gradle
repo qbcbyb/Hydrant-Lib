@@ -49,13 +49,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':library')
-    compile project(':requestloader')
-    compile project(':QiNiu')
-    compile project(':qrcodescan')
-    compile project(':jazzylist')
-    compile project(':ImageCrop')
-    compile project(':androidtimessquareidle_wulib')
-    compile 'com.qiniu:qiniu-android-sdk:7.2.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':library')
+    implementation project(':requestloader')
+    implementation project(':QiNiu')
+    implementation project(':qrcodescan')
+    implementation project(':jazzylist')
+    implementation project(':ImageCrop')
+    implementation project(':androidtimessquareidle_wulib')
+    implementation 'com.qiniu:qiniu-android-sdk:7.2.0'
 }

@@ -20,10 +20,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile project(':viewlibrary')
-    compile project(':library')
-    compile "com.android.support:appcompat-v7:$PROJECT_SUPPORT_VERSION"
-    compile "com.android.support:recyclerview-v7:$PROJECT_SUPPORT_VERSION"
+    implementation project(':viewlibrary')
+    implementation project(':library')
+    implementation "com.android.support:appcompat-v7:$PROJECT_SUPPORT_VERSION"
+    implementation "com.android.support:recyclerview-v7:$PROJECT_SUPPORT_VERSION"
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }

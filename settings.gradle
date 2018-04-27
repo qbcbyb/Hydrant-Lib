@@ -1,1 +1,4 @@
-include ':app', ':library', ':PullToRefresh', ':tecentweibo', ':QiNiu', ':ImageCrop', ':androidtimessquareidle_wulib', ':qrcodescan', ':jazzylist', ':activeandroid', ':viewlibrary', ':requestloader', ':shareplugin', ':provider', ':viewlibrarysample', ':libcommon', ':versioncheck'
+include ':library',  ':tecentweibo', ':QiNiu', ':ImageCrop', ':androidtimessquareidle_wulib', ':qrcodescan', ':jazzylist', ':activeandroid', ':viewlibrary', ':requestloader', ':shareplugin', ':provider', ':viewlibrarysample', ':libcommon', ':versioncheck'
+//include ':QrCodeScanNew'
+//include ':app'
+include ':PullToRefresh'

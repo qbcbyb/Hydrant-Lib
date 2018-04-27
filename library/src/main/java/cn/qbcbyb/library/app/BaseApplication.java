@@ -18,8 +18,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
-import org.apache.http.util.EncodingUtils;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -36,6 +34,12 @@ import cn.qbcbyb.library.util.StringUtils;
 
 public class BaseApplication extends Application implements Thread.UncaughtExceptionHandler {
 
+    private static BaseApplication instance;
+    private static SimpleDateFormat sdf;
+    private String logFileName = "error.log";
+    private String imageFoldName = "image";
+    private String deviceId;
+
     public static DisplayImageOptions.Builder getDefaultDisplayImageOptionsBuilder() {
         return new DisplayImageOptions.Builder()
                 .showImageOnLoading(BaseApplication.getInstance(BaseApplication.class).getDefaultLoadingRes())
@@ -47,17 +51,16 @@ public class BaseApplication extends Application implements Thread.UncaughtExcep
                 .bitmapConfig(Bitmap.Config.RGB_565);
     }
 
-    private static BaseApplication instance;
-
     public static <T extends BaseApplication> T getInstance(Class<T> tClass) {
         return tClass.cast(instance);
     }
 
-    private String logFileName = "error.log";
-    private String imageFoldName = "image";
-    private String deviceId;
-
-    private static SimpleDateFormat sdf;
+    public static String getTime() {
+        if (sdf == null) {
+            sdf = new SimpleDateFormat("MM-dd HH:mm");
+        }
+        return sdf.format(new Date());
+    }
 
     protected void setLogFileName(String logFileName) {
         this.logFileName = logFileName;
@@ -69,13 +72,6 @@ public class BaseApplication extends Application implements Thread.UncaughtExcep
 
     public int getDefaultLoadingRes() {
         return R.drawable.default_loading;
-    }
-
-    public static String getTime() {
-        if (sdf == null) {
-            sdf = new SimpleDateFormat("MM-dd HH:mm");
-        }
-        return sdf.format(new Date());
     }
 
     public String getDeviceId() {
@@ -190,7 +186,7 @@ public class BaseApplication extends Application implements Thread.UncaughtExcep
         try {
             if (errLog.exists() || errLog.createNewFile()) {
                 OutputStream os = new FileOutputStream(errLog, true);
-                os.write(EncodingUtils.getBytes(buffer, "UTF-8"));
+                os.write(buffer.getBytes("UTF-8"));
                 os.flush();
                 os.close();
             }

@@ -9,6 +9,7 @@ import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -36,75 +37,6 @@ final class CameraConfigurationManager {
 
     CameraConfigurationManager(Context context) {
         this.context = context;
-    }
-
-    void initFromCameraParameters(Camera camera) {
-        Camera.Parameters parameters = camera.getParameters();
-        previewFormat = parameters.getPreviewFormat();
-        previewFormatString = parameters.get("preview-format");
-        WindowManager manager = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
-        Display display = manager.getDefaultDisplay();
-        screenResolution = new Point(display.getWidth(), display.getHeight());
-
-        Point screenResolutionForCamera = new Point();
-        screenResolutionForCamera.x = screenResolution.x;
-        screenResolutionForCamera.y = screenResolution.y;
-        if (screenResolution.x < screenResolution.y) {
-            screenResolutionForCamera.x = screenResolution.y;
-            screenResolutionForCamera.y = screenResolution.x;
-        }
-        cameraResolution = getCameraResolution(parameters, screenResolutionForCamera);
-    }
-
-    void setDesiredCameraParameters(Camera camera) {
-        Camera.Parameters parameters = camera.getParameters();
-        setFlash(parameters);
-        setZoom(parameters);
-        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = manager.getDefaultDisplay();
-        final int rotation = display.getRotation();
-        if (rotation == Surface.ROTATION_0) {
-//            parameters.set("orientation", "portrait"); //
-            parameters.set("rotation", 90); // 镜头角度转90度（默认摄像头是横拍）
-            camera.setDisplayOrientation(90); // 在2.2以上可以使用
-        } else if (rotation == Surface.ROTATION_270) {
-            parameters.set("rotation", 180); 
-            camera.setDisplayOrientation(180); 
-        } else if (rotation == Surface.ROTATION_180) {
-            parameters.set("rotation", 270); 
-            camera.setDisplayOrientation(270); 
-        } else {// 如果是横屏
-//            parameters.set("orientation", "landscape"); //
-            parameters.set("rotation", 0);
-            camera.setDisplayOrientation(0); // 在2.2以上可以使用
-        }
-        parameters.setPreviewSize(cameraResolution.x, cameraResolution.y);
-//        parameters.setPictureSize(cameraResolution.x, cameraResolution.y);
-        camera.setParameters(parameters);
-    }
-
-    Point getCameraResolution() {
-        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = manager.getDefaultDisplay();
-        final int rotation = display.getRotation();
-        if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
-            return new Point(cameraResolution.y, cameraResolution.x);
-        } else {// 如果是横屏
-            return new Point(cameraResolution);
-        }
-    }
-
-    Point getScreenResolution() {
-        return screenResolution;
-    }
-
-    int getPreviewFormat() {
-        return previewFormat;
-    }
-
-    String getPreviewFormatString() {
-        return previewFormatString;
     }
 
     private static Point getCameraResolution(Camera.Parameters parameters,
@@ -190,6 +122,91 @@ final class CameraConfigurationManager {
             }
         }
         return tenBestValue;
+    }
+
+    void initFromCameraParameters(Camera camera) {
+        Camera.Parameters parameters = camera.getParameters();
+        previewFormat = parameters.getPreviewFormat();
+        previewFormatString = parameters.get("preview-format");
+        WindowManager manager = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        Display display = manager.getDefaultDisplay();
+        screenResolution = new Point(display.getWidth(), display.getHeight());
+
+        Point screenResolutionForCamera = new Point();
+        screenResolutionForCamera.x = screenResolution.x;
+        screenResolutionForCamera.y = screenResolution.y;
+        if (screenResolution.x < screenResolution.y) {
+            screenResolutionForCamera.x = screenResolution.y;
+            screenResolutionForCamera.y = screenResolution.x;
+        }
+        cameraResolution = getCameraResolution(parameters, screenResolutionForCamera);
+    }
+
+    void setDesiredCameraParameters(Camera camera) {
+        Camera.Parameters parameters = camera.getParameters();
+        setFlash(parameters);
+        setZoom(parameters);
+        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = manager.getDefaultDisplay();
+        final int rotation = display.getRotation();
+        if (rotation == Surface.ROTATION_0) {
+//            parameters.set("orientation", "portrait"); //
+            parameters.set("rotation", 90); // 镜头角度转90度（默认摄像头是横拍）
+            camera.setDisplayOrientation(90); // 在2.2以上可以使用
+        } else if (rotation == Surface.ROTATION_270) {
+            parameters.set("rotation", 180);
+            camera.setDisplayOrientation(180);
+        } else if (rotation == Surface.ROTATION_180) {
+            parameters.set("rotation", 270);
+            camera.setDisplayOrientation(270);
+        } else {// 如果是横屏
+//            parameters.set("orientation", "landscape"); //
+            parameters.set("rotation", 0);
+            camera.setDisplayOrientation(0); // 在2.2以上可以使用
+        }
+        parameters.setPreviewSize(cameraResolution.x, cameraResolution.y);
+        int maxSideLenght = Math.max(cameraResolution.x, cameraResolution.y);
+        final List<Camera.Size> supportedPictureSizes = parameters.getSupportedPictureSizes();
+        float closestDis = Float.MAX_VALUE;
+        Camera.Size closestSize = null;
+        for (Camera.Size supportedPictureSize : supportedPictureSizes) {
+            if (supportedPictureSize.width < maxSideLenght || supportedPictureSize.height < maxSideLenght) {
+                continue;
+            }
+            final float dis = Math.abs(supportedPictureSize.width / (float) supportedPictureSize.height - cameraResolution.x / (float) cameraResolution.y);
+            if (dis < closestDis) {
+                closestDis = dis;
+                closestSize = supportedPictureSize;
+            }
+        }
+        if (closestSize != null) {
+            parameters.setPictureSize(closestSize.width, closestSize.height);
+        }
+        camera.setParameters(parameters);
+    }
+
+    Point getCameraResolution() {
+        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = manager.getDefaultDisplay();
+        final int rotation = display.getRotation();
+        if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
+            return new Point(cameraResolution.y, cameraResolution.x);
+        } else {// 如果是横屏
+            return new Point(cameraResolution);
+        }
+    }
+
+    Point getScreenResolution() {
+        return screenResolution;
+    }
+
+    int getPreviewFormat() {
+        return previewFormat;
+    }
+
+    String getPreviewFormatString() {
+        return previewFormatString;
     }
 
     private void setFlash(Camera.Parameters parameters) {

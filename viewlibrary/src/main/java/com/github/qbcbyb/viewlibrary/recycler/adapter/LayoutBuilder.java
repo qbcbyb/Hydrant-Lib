@@ -1,22 +1,22 @@
 package com.github.qbcbyb.viewlibrary.recycler.adapter;
 
+import android.view.LayoutInflater;
 import android.view.View;
-
-import java.lang.reflect.Constructor;
+import android.view.ViewGroup;
 
 /**
  * Created by qbcby on 2016/6/14.
  */
-public class LayoutBuilder<Bean> {
-    public final int layoutId;
-    public final Constructor<? extends ViewHolder<Bean>> holderConstructor;
+public abstract class LayoutBuilder<Bean, T extends ViewHolder<Bean>> {
+    private final int layoutId;
 
-    public LayoutBuilder(int layoutId, Class<? extends ViewHolder<Bean>> holderClass) {
+    public LayoutBuilder(int layoutId) {
         this.layoutId = layoutId;
-        try {
-            this.holderConstructor = holderClass.getConstructor(View.class);
-        } catch (NoSuchMethodException e) {
-            throw new IllegalStateException("holderConstructor must has only one View parameter!");
-        }
     }
+
+    public T generateViewHolder(LayoutInflater layoutInflater, ViewGroup parent, boolean attachToRoot) {
+        return newViewHolder(layoutInflater.inflate(layoutId, parent, attachToRoot));
+    }
+
+    public abstract T newViewHolder(View itemView);
 }
