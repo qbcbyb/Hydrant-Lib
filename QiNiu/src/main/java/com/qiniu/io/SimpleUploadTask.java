@@ -11,7 +11,7 @@ import com.qiniu.utils.MultipartEntity;
 import com.qiniu.utils.UploadTask;
 import com.qiniu.utils.Util;
 
-import org.apache.http.HttpResponse;
+import cz.msebera.android.httpclient.HttpResponse;
 
 import java.io.IOException;
 import java.util.Map;

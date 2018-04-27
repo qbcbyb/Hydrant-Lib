@@ -16,7 +16,7 @@
 
 package com.android.volley;
 
-import org.apache.http.HttpStatus;
+import cz.msebera.android.httpclient.HttpStatus;
 
 import java.io.Serializable;
 import java.util.Collections;

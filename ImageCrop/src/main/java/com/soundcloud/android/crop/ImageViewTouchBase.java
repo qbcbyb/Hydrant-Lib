@@ -29,7 +29,7 @@ import android.widget.ImageView;
 /*
  * Modified from original in AOSP.
  */
-abstract class ImageViewTouchBase extends ImageView {
+abstract class ImageViewTouchBase extends android.support.v7.widget.AppCompatImageView {
 
     private static final float SCALE_RATE = 1.25F;
 

@@ -2,9 +2,9 @@ package com.qiniu.utils;
 
 import com.qiniu.conf.Conf;
 
-import org.apache.http.entity.AbstractHttpEntity;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.util.ByteArrayBuffer;
+import cz.msebera.android.httpclient.entity.AbstractHttpEntity;
+import cz.msebera.android.httpclient.message.BasicHeader;
+import cz.msebera.android.httpclient.util.ByteArrayBuffer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

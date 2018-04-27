@@ -10,8 +10,8 @@ import com.qiniu.rs.CallRet;
 import com.qiniu.rs.PutExtra;
 import com.qiniu.rs.UploadCallRet;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.client.methods.HttpPost;
 
 import java.io.IOException;
 

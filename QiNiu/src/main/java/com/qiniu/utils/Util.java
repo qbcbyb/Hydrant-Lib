@@ -7,11 +7,6 @@ import android.util.Base64;
 import com.qiniu.conf.Conf;
 import com.qiniu.rs.CallRet;
 
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,6 +14,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Random;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.StatusLine;
+import cz.msebera.android.httpclient.client.methods.HttpPost;
+import cz.msebera.android.httpclient.util.EntityUtils;
 
 public class Util {
 
@@ -71,13 +72,13 @@ public class Util {
 
             } catch (java.net.PortUnreachableException e) {
 
-            } catch (org.apache.http.conn.HttpHostConnectException e) {
+            } catch (cz.msebera.android.httpclient.conn.HttpHostConnectException e) {
 
             } catch (java.net.ConnectException e) {
 
             } catch (java.net.UnknownServiceException e) {
 
-            } catch (org.apache.http.conn.ConnectTimeoutException e) {
+            } catch (cz.msebera.android.httpclient.conn.ConnectTimeoutException e) {
 
             } catch (java.net.SocketTimeoutException e) {
 
